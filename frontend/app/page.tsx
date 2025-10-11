@@ -113,9 +113,9 @@ export default function Home() {
         )}
       </header>
 
-      {/* Hero Section - EXTREMELY Mobile First */}
-      <main className="max-w-6xl mx-auto px-2 sm:px-3 md:px-4 lg:px-6 py-4 sm:py-6 md:py-8 lg:py-16">
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 xl:gap-12 items-center">
+      {/* Hero Section - Original Layout */}
+      <main className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-8 lg:py-16">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 items-center">
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-800 dark:text-white mb-2 sm:mb-3 md:mb-4 lg:mb-6 leading-tight">
               Tech Entrepreneur,
@@ -143,7 +143,7 @@ export default function Home() {
             </div>
           </div>
           <div className="order-1 lg:order-2 relative">
-            <div className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] mx-auto lg:max-w-none aspect-[4/3] bg-gradient-to-br from-slate-400 to-slate-600 rounded-lg sm:rounded-xl md:rounded-2xl shadow-2xl overflow-hidden">
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto lg:mx-0 aspect-[4/3] bg-gradient-to-br from-slate-400 to-slate-600 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
               <img src="/mugabo.jpg" alt="Mugabo's profile photo" className="w-full h-full object-cover" />
             </div>
           </div>

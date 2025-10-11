@@ -4,6 +4,7 @@ import { useState, useLayoutEffect } from 'react';
 
 export default function About() {
   const [theme, setTheme] = useState('light');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useLayoutEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -24,6 +25,10 @@ export default function About() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const education = [
@@ -131,133 +136,178 @@ export default function About() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-slate-200 dark:border-gray-700 p-6">
+      {/* Header/Navigation - Mobile First */}
+      <header className="sticky top-0 z-50 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 p-3 sm:p-4">
         <nav className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white"><a href="/">Mugabo</a></h1>
-          <div className="space-x-6">
-            <a href="/" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Home</a>
-            <a href="/about" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white font-semibold">About</a>
-            <a href="/projects" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Projects</a>
-            <a href="/skills" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Skills</a>
-            <a href="/gallery" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Gallery</a>
-            <a href="/contact" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">Contact</a>
-            <button onClick={toggleTheme} className="ml-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
+            <a href="/" className="hover:opacity-80 transition-opacity">Mugabo</a>
+          </h1>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex space-x-3 xl:space-x-6">
+            <a href="/" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors px-2 py-2 text-sm xl:text-base">Home</a>
+            <a href="/about" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white font-semibold transition-colors px-2 py-2 text-sm xl:text-base">About</a>
+            <a href="/projects" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors px-2 py-2 text-sm xl:text-base">Projects</a>
+            <a href="/skills" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors px-2 py-2 text-sm xl:text-base">Skills</a>
+            <a href="/gallery" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors px-2 py-2 text-sm xl:text-base">Gallery</a>
+            <a href="/contact" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors px-2 py-2 text-sm xl:text-base">Contact</a>
+            <button
+              onClick={toggleTheme}
+              className="ml-3 p-2 bg-slate-200 dark:bg-slate-700 rounded-full hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 hover:scale-110"
+            >
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
           </div>
+
+          {/* Mobile Menu Controls */}
+          <div className="lg:hidden flex items-center space-x-2">
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 sm:p-2 bg-slate-200 dark:bg-slate-700 rounded-full hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200"
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+            <button
+              onClick={toggleMobileMenu}
+              className={`p-2 sm:p-3 bg-slate-200 dark:bg-slate-700 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 ${isMobileMenuOpen ? 'bg-slate-300 dark:bg-slate-600 scale-105' : ''}`}
+            >
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-slate-800 dark:text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </nav>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden mt-2 sm:mt-3 pb-3 sm:pb-4 border-t border-slate-200 dark:border-slate-700 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg">
+            <div className="flex flex-col space-y-1 pt-2 sm:pt-3">
+              <a href="/" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-2 sm:py-3 px-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-1 sm:mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>🏠 Home</a>
+              <a href="/about" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white font-semibold transition-colors py-2 sm:py-3 px-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-1 sm:mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>👤 About</a>
+              <a href="/projects" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-2 sm:py-3 px-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-1 sm:mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>📁 Projects</a>
+              <a href="/skills" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-2 sm:py-3 px-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-1 sm:mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>🛠️ Skills</a>
+              <a href="/gallery" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-2 sm:py-3 px-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-1 sm:mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>🖼️ Gallery</a>
+              <a href="/contact" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-2 sm:py-3 px-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-1 sm:mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>📞 Contact</a>
+            </div>
+          </div>
+        )}
       </header>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-16">
-      <div className="max-w-6xl mx-auto px-6">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-8 text-center">About Mugabo</h1>
 
-        {/* Who I Am & Expertise */}
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-            <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center">
-              <span className="mr-2">👤</span> Who I Am
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Hi, I'm Niyonshuti Martin - Mugabo, a passionate tech entrepreneur, AI practitioner, and SpaceTech enthusiast. My journey began with a curiosity for how technology can solve everyday problems, evolving into a mission to bridge AI, IoT, and real-world challenges. I'm the founder behind OpenClimate, where we use AI to predict disasters and build climate resilience in Africa, and RoutiQ, optimizing traffic for safer, greener cities.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              As an entrepreneur, I thrive on launching ventures like eNeza Marketplace, turning ideas into scalable solutions. Whether building startups or collaborating on teams, I focus on creating systems that not only work but make a difference—saving lives, reducing emissions, and empowering communities. Let's connect if you're interested in innovative tech partnerships!
-            </p>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center">About Mugabo</h1>
 
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-            <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center">
-              <span className="mr-2">🛠️</span> Key Expertise
-            </h2>
-            <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2">
-              <li><strong>AI:</strong> Building predictive models and data pipelines, as seen in OpenClimate's forecasting for disaster alerts and RoutiQ's traffic predictions.</li>
-              <li><strong>IoT/CPS:</strong> Designing embedded systems and device networks for real-time data in smart environments, like sensor integrations in my drone projects.</li>
-              <li><strong>Cybersecurity:</strong> Implementing threat detection and secure designs, ensuring robust systems in all my ventures from marketplace security to network vulnerabilities.</li>
-              <li><strong>SpaceTech:</strong> Developing autonomous navigation and drone technologies, aligning with my long-term UAV goals and satellite system interests.</li>
-              <li><strong>Business:</strong> Scaling tech solutions through entrepreneurship, project management, and strategic alignment, as demonstrated in eNeza's market growth and OpenClimate's community impact.</li>
-            </ul>
-          </div>
-        </div>
+          {/* Who I Am & Expertise */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mb-8 sm:mb-12 lg:mb-16">
+            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
+                <span className="mr-2">👤</span> Who I Am
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
+                Hi, I'm Niyonshuti Martin - Mugabo, a passionate tech entrepreneur, AI practitioner, and SpaceTech enthusiast. My journey began with a curiosity for how technology can solve everyday problems, evolving into a mission to bridge AI, IoT, and real-world challenges. I'm the founder behind OpenClimate, where we use AI to predict disasters and build climate resilience in Africa, and RoutiQ, optimizing traffic for safer, greener cities.
+              </p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+                As an entrepreneur, I thrive on launching ventures like eNeza Marketplace, turning ideas into scalable solutions. Whether building startups or collaborating on teams, I focus on creating systems that not only work but make a difference—saving lives, reducing emissions, and empowering communities. Let's connect if you're interested in innovative tech partnerships!
+              </p>
+            </div>
 
-        {/* Educational Background */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Educational Journey</h2>
-          <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-1 bg-blue-500 hidden md:block"></div>
-            <div className="space-y-8">
-              {education.map((edu, index) => (
-                <div key={index} className="flex items-start space-x-4 relative">
-                  <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0">
-                    {edu.icon}
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex-1 hover:shadow-xl transition">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">{edu.level}</h3>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium">{edu.period}</p>
-                    <p className="text-gray-600 dark:text-gray-300 mb-1">{edu.details}</p>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {edu.link !== "#" ? (
-                        <a href={edu.link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                          {edu.institution}
-                        </a>
-                      ) : (
-                        edu.institution
-                      )} {edu.location && `- ${edu.location}`}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
+                <span className="mr-2">🛠️</span> Key Expertise
+              </h2>
+              <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-2 sm:space-y-3 text-sm sm:text-base">
+                <li><strong>AI:</strong> Building predictive models and data pipelines, as seen in OpenClimate's forecasting for disaster alerts and RoutiQ's traffic predictions.</li>
+                <li><strong>IoT/CPS:</strong> Designing embedded systems and device networks for real-time data in smart environments, like sensor integrations in my drone projects.</li>
+                <li><strong>Cybersecurity:</strong> Implementing threat detection and secure designs, ensuring robust systems in all my ventures from marketplace security to network vulnerabilities.</li>
+                <li><strong>SpaceTech:</strong> Developing autonomous navigation and drone technologies, aligning with my long-term UAV goals and satellite system interests.</li>
+                <li><strong>Business:</strong> Scaling tech solutions through entrepreneurship, project management, and strategic alignment, as demonstrated in eNeza's market growth and OpenClimate's community impact.</li>
+              </ul>
             </div>
           </div>
-        </div>
 
-        {/* Self-Taught & Future Plans */}
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-            <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center">
-              <span className="mr-2">📖</span> Self-Taught Expertise
-            </h2>
-            <ul className="space-y-4">
-              {selfTaught.map((item, index) => (
-                <li key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0">
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="font-semibold text-gray-800 dark:text-white">{item.field}</span>
-                    <span className="text-blue-600 dark:text-blue-400 text-sm">{item.period}</span>
+          {/* Educational Background */}
+          <div className="mb-8 sm:mb-12 lg:mb-16">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center">Educational Journey</h2>
+            <div className="relative">
+              <div className="absolute left-4 sm:left-6 lg:left-8 top-0 bottom-0 w-1 bg-slate-600 hidden md:block"></div>
+              <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+                {education.map((edu, index) => (
+                  <div key={index} className="flex items-start space-x-3 sm:space-x-4 relative">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-slate-600 rounded-full flex items-center justify-center text-white text-lg sm:text-xl lg:text-2xl flex-shrink-0">
+                      {edu.icon}
+                    </div>
+                    <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-5 lg:p-6 rounded-lg shadow-lg flex-1 hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-slate-800 dark:text-white mb-1 sm:mb-2">{edu.level}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 font-medium text-sm sm:text-base">{edu.period}</p>
+                      <p className="text-slate-600 dark:text-slate-300 mb-1 text-sm sm:text-base">{edu.details}</p>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                        {edu.link !== "#" ? (
+                          <a href={edu.link} target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+                            {edu.institution}
+                          </a>
+                        ) : (
+                          edu.institution
+                        )} {edu.location && `- ${edu.location}`}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">{item.description}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition">
-            <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center">
-              <span className="mr-2">🔮</span> Future Aspirations
-            </h2>
-            <div className="space-y-4">
-              {futurePlans.map((plan, index) => (
-                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0">
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-1">{plan.level}</h3>
-                  <p className="text-blue-600 dark:text-blue-400 text-sm">{plan.period}</p>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">{plan.details}</p>
-                  <a href={plan.link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline text-sm">
-                    {plan.institution}
-                  </a>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="text-center">
-          <a
-            href="/contact"
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition text-lg"
-          >
-            Let's Collaborate
-          </a>
+          {/* Self-Taught & Future Plans */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mb-8 sm:mb-12 lg:mb-16">
+            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
+                <span className="mr-2">📖</span> Self-Taught Expertise
+              </h2>
+              <ul className="space-y-3 sm:space-y-4">
+                {selfTaught.map((item, index) => (
+                  <li key={index} className="border-b border-slate-200 dark:border-slate-700 pb-3 sm:pb-4 last:border-b-0">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 sm:mb-2">
+                      <span className="font-semibold text-slate-800 dark:text-white text-sm sm:text-base">{item.field}</span>
+                      <span className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1 sm:mt-0">{item.period}</span>
+                    </div>
+                    <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">{item.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
+                <span className="mr-2">🔮</span> Future Aspirations
+              </h2>
+              <div className="space-y-3 sm:space-y-4">
+                {futurePlans.map((plan, index) => (
+                  <div key={index} className="border-b border-slate-200 dark:border-slate-700 pb-3 sm:pb-4 last:border-b-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white mb-1">{plan.level}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">{plan.period}</p>
+                    <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mb-2">{plan.details}</p>
+                    <a href={plan.link} target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors text-xs sm:text-sm">
+                      {plan.institution}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <a
+              href="/contact"
+              className="bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-slate-700 dark:hover:bg-slate-300 transition-all duration-300 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform min-h-[48px] flex items-center justify-center"
+            >
+              Let's Collaborate
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </>
+    </>
   );
 }
