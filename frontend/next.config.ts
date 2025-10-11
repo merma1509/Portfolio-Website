@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   },
   // Performance optimizations for better Speed Insights scores
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // Disabled due to missing critters dependency
     optimizePackageImports: ['lucide-react'],
   },
   // Enable compression
