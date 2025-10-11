@@ -10,7 +10,7 @@ export default function Home() {
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/api/newsletter', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/newsletter`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newsletterData),
