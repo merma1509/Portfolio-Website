@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Mugabo (Niyonshuti Martin) - Tech Entrepreneur, AI Practitioner, & SpaceTech Enthusiast",
-  description: "Portfolio of Mugabo, expert in AI/ML, IoT, autonomous systems, and SpaceTech. Discover projects like OpenClimate, eNeza Marketplace, and RoutiQ.",
+  description: "Portfolio of Mugabo, skilled in AI/ML, IoT, autonomous systems, and SpaceTech. Discover projects like OpenClimate, eNeza Marketplace, Drones, UAVs, and RoutiQ.",
 };
 
 export default function RootLayout({
