@@ -20,10 +20,6 @@ const nextConfig: NextConfig = {
   },
   // Enable compression
   compress: true,
-  // Optimize fonts
-  optimizeFonts: true,
-  // Enable SWC minifier for better performance
-  swcMinify: true,
 };
 
 export default nextConfig;
