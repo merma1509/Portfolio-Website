@@ -36,68 +36,78 @@ export default function Skills() {
     {
       category: "AI & Machine Learning",
       icon: "🤖",
-      opacity: "bg-slate-900/10",
-      textOpacity: "text-slate-800/90",
-      borderOpacity: "border-slate-200/30",
+      gradient: "from-green-500 via-emerald-500 to-green-600",
+      bgGradient: "from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20",
+      borderColor: "border-green-200 dark:border-green-700",
+      textColor: "text-green-800 dark:text-green-200",
+      buttonColor: "bg-green-600 hover:bg-green-700",
       items: [
-        { name: "Advanced Predictive Analytics", level: 92, highlight: true },
-        { name: "Deep Learning Architecture Design", level: 88, highlight: true },
-        { name: "Production ML Pipeline Development", level: 90, highlight: true }
+        { name: "Advanced Predictive Analytics", highlight: true },
+        { name: "Deep Learning Architecture Design", highlight: true },
+        { name: "Production ML Pipeline Development", highlight: true }
       ]
     },
     {
       category: "IoT & Cyber-Physical Systems",
       icon: "🌐",
-      opacity: "bg-slate-800/8",
-      textOpacity: "text-slate-700/80",
-      borderOpacity: "border-slate-200/25",
+      gradient: "from-blue-500 via-cyan-500 to-blue-600",
+      bgGradient: "from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20",
+      borderColor: "border-blue-200 dark:border-blue-700",
+      textColor: "text-blue-800 dark:text-blue-200",
+      buttonColor: "bg-blue-600 hover:bg-blue-700",
       items: [
-        { name: "Industrial IoT Network Architecture", level: 87, highlight: true },
-        { name: "Real-Time Embedded System Design", level: 85, highlight: true },
-        { name: "Cyber-Physical Security Protocols", level: 83, highlight: true }
+        { name: "IoT Network Architecture", highlight: true },
+        { name: "Real-Time Embedded System Design", highlight: true },
+        { name: "Cyber-Physical Security Protocols", highlight: true }
       ]
     },
     {
       category: "Cybersecurity",
       icon: "🔒",
-      opacity: "bg-slate-700/6",
-      textOpacity: "text-slate-600/70",
-      borderOpacity: "border-slate-200/20",
+      gradient: "from-teal-500 via-cyan-500 to-teal-600",
+      bgGradient: "from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20",
+      borderColor: "border-teal-200 dark:border-teal-700",
+      textColor: "text-teal-800 dark:text-teal-200",
+      buttonColor: "bg-teal-600 hover:bg-teal-700",
       items: [
-        { name: "Advanced Threat Detection Systems", level: 91, highlight: true },
-        { name: "Zero-Trust Network Architecture", level: 89, highlight: true },
-        { name: "Vulnerability Assessment & Penetration Testing", level: 87, highlight: true }
+        { name: "Threat Detection Systems", highlight: true },
+        { name: "Zero-Trust Network Architecture", highlight: true },
+        { name: "Vulnerability Assessment & Penetration Testing", highlight: true }
       ]
     },
     {
       category: "SpaceTech & Drones",
       icon: "🚀",
-      opacity: "bg-slate-600/4",
-      textOpacity: "text-slate-500/60",
-      borderOpacity: "border-slate-200/15",
+      gradient: "from-slate-500 via-gray-500 to-slate-600",
+      bgGradient: "from-slate-50 to-gray-50 dark:from-slate-900/20 dark:to-gray-900/20",
+      borderColor: "border-slate-200 dark:border-slate-700",
+      textColor: "text-slate-800 dark:text-slate-200",
+      buttonColor: "bg-slate-600 hover:bg-slate-700",
       items: [
-        { name: "Autonomous UAV Navigation Systems", level: 85, highlight: true },
-        { name: "Satellite Communication Protocols", level: 82, highlight: true },
-        { name: "Hardware-Software Integration for Aerospace", level: 88, highlight: true }
+        { name: "Autonomous UAV Navigation Systems", highlight: true },
+        { name: "Satellite Communication Protocols", highlight: true },
+        { name: "Hardware-Software Integration", highlight: true }
       ]
     },
     {
       category: "Business & Leadership",
       icon: "💼",
-      opacity: "bg-slate-500/3",
-      textOpacity: "text-slate-400/50",
-      borderOpacity: "border-slate-200/10",
+      gradient: "from-blue-800 via-blue-700 to-blue-900",
+      bgGradient: "from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20",
+      borderColor: "border-blue-200 dark:border-blue-700",
+      textColor: "text-blue-800 dark:text-blue-200",
+      buttonColor: "bg-blue-800 hover:bg-blue-900",
       items: [
-        { name: "Technology Innovation Strategy", level: 93, highlight: true },
-        { name: "Cross-Functional Team Leadership", level: 90, highlight: true },
-        { name: "Strategic Partnership Development", level: 88, highlight: true }
+        { name: "Technology Innovation Strategy", highlight: true },
+        { name: "Cross-Functional Team Leadership", highlight: true },
+        { name: "Strategic Partnership Development", highlight: true }
       ]
     }
   ];
 
   return (
     <>
-      {/* Header - Ultra Mobile Optimized */}
+      {/* Header/Navigation - Mobile First */}
       <header className="sticky top-0 z-50 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 p-3 sm:p-4">
         <nav className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
@@ -130,7 +140,7 @@ export default function Skills() {
             </button>
             <button
               onClick={toggleMobileMenu}
-              className={`p-2 bg-slate-200 dark:bg-slate-700 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 ${isMobileMenuOpen ? 'bg-slate-300 dark:bg-slate-600' : ''}`}
+              className={`p-2 bg-slate-200 dark:bg-slate-700 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all duration-200 ${isMobileMenuOpen ? 'bg-slate-300 dark:bg-slate-600 scale-105' : ''}`}
             >
               <svg className="w-5 h-5 text-slate-800 dark:text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isMobileMenuOpen ? (
@@ -143,118 +153,172 @@ export default function Skills() {
           </div>
         </nav>
 
-        {/* Enhanced Mobile Navigation Menu */}
+        {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-3 pb-4 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+          <div className="lg:hidden mt-3 pb-4 border-t border-slate-200 dark:border-slate-700 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg">
             <div className="flex flex-col space-y-1 pt-3">
-              <a href="/" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2" onClick={() => setIsMobileMenuOpen(false)}>🏠 Home</a>
-              <a href="/about" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2" onClick={() => setIsMobileMenuOpen(false)}>👤 About</a>
-              <a href="/projects" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2" onClick={() => setIsMobileMenuOpen(false)}>📁 Projects</a>
-              <a href="/skills" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white font-semibold transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2" onClick={() => setIsMobileMenuOpen(false)}>🛠️ Skills</a>
-              <a href="/gallery" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2" onClick={() => setIsMobileMenuOpen(false)}>🖼️ Gallery</a>
-              <a href="/contact" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2" onClick={() => setIsMobileMenuOpen(false)}>📞 Contact</a>
+              <a href="/" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
+              <a href="/about" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+              <a href="/projects" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>Projects</a>
+              <a href="/skills" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white font-semibold transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>Skills</a>
+              <a href="/gallery" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>Gallery</a>
+              <a href="/contact" className="text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white transition-colors py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg mx-2 text-sm sm:text-base" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
             </div>
           </div>
         )}
       </header>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16">
-        <div className="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-20">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-800 dark:text-white mb-3 sm:mb-4 lg:mb-6 bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent leading-tight">
-              Skills & Expertise
+      {/* Main Content - Enhanced Background */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-400/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-indigo-400/5 rounded-full blur-xl animate-bounce"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+          {/* Hero Section */}
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20 animate-fade-in-up">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 animate-fade-in-up">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">
+                Skills & Expertise
+              </span>
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed px-2">
+            <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed px-2 animate-fade-in-up delay-200">
               Technical proficiencies built through hands-on experience, academic excellence, and continuous innovation across multiple domains
             </p>
           </div>
 
-          <div className="space-y-6 sm:space-y-8 lg:space-y-12 xl:space-y-16">
+          {/* Skills Categories */}
+          <div className="space-y-8 sm:space-y-12 lg:space-y-16">
             {skillCategories.map((skill, index) => (
               <div
                 key={index}
-                className={`relative ${skill.opacity} dark:bg-opacity-10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border ${skill.borderOpacity} dark:border-opacity-20 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl cursor-pointer`}
+                className={`group bg-gradient-to-br ${skill.bgGradient} p-6 sm:p-8 lg:p-10 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border ${skill.borderColor} hover:scale-[1.02] relative overflow-hidden animate-fade-in-up delay-${index * 100}`}
                 onMouseEnter={() => setActiveSkill(index)}
                 onMouseLeave={() => setActiveSkill(null)}
               >
-                <div className="flex items-center mb-4 sm:mb-6 lg:mb-8">
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-slate-800 dark:bg-slate-200 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 lg:mr-6 shadow-lg transition-all duration-300 ${activeSkill === index ? 'scale-110 rotate-3' : ''}`}>
-                    <span className="text-lg sm:text-xl lg:text-2xl">{skill.icon}</span>
+                {/* Decorative elements */}
+                <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${skill.gradient} opacity-10 rounded-full blur-xl animate-pulse`}></div>
+                <div className={`absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br ${skill.gradient} opacity-10 rounded-full blur-xl animate-pulse delay-500`}></div>
+
+                {/* Category Header */}
+                <div className="flex items-center mb-6 sm:mb-8 lg:mb-10 relative z-10">
+                  <div className={`w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br ${skill.gradient} rounded-2xl flex items-center justify-center mr-4 sm:mr-6 shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                    <span className="text-white text-xl sm:text-2xl lg:text-3xl animate-bounce-subtle">{skill.icon}</span>
                   </div>
                   <div className="flex-1">
-                    <h2 className={`text-xl sm:text-2xl lg:text-3xl font-bold ${skill.textOpacity} dark:text-slate-200 mb-2 transition-colors ${activeSkill === index ? 'text-slate-900 dark:text-white' : ''}`}>
+                    <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${skill.textColor} mb-3 transition-all duration-300 ${activeSkill === index ? 'scale-105' : ''}`}>
                       {skill.category}
                     </h2>
-                    <div className={`w-12 sm:w-16 lg:w-20 h-1 bg-slate-300 dark:bg-slate-600 rounded-full ${skill.borderOpacity} transition-all duration-300`}>
+                    {/*
+                    <div className="w-16 sm:w-20 lg:w-24 h-2 bg-gradient-to-r from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-500 rounded-full overflow-hidden">
                       <div
-                        className="w-full h-full bg-slate-800 dark:bg-slate-300 rounded-full transition-all duration-500"
-                        style={{width: `${100 - (index * 15)}%`}}
+                        className={`w-full h-full bg-gradient-to-r ${skill.gradient} rounded-full transition-all duration-1000 ease-out`}
+                        style={{width: `${100 - (skill.category.length)}%`}}
                       ></div>
-                    </div>
+                    </div> */}
                   </div>
-                  <div className={`text-2xl sm:text-3xl lg:text-4xl transition-all duration-300 ${activeSkill === index ? 'scale-125' : 'scale-100'}`}>
+                  <div className={`text-3xl sm:text-4xl lg:text-5xl transition-all duration-300 ${activeSkill === index ? 'scale-125 animate-spin' : 'scale-100'}`}>
                     ⭐
                   </div>
                 </div>
 
-                <div className="grid gap-3 sm:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {/* Skills Grid */}
+                <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
                   {skill.items.map((item, i) => (
                     <div
                       key={i}
-                      className={`group bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-5 border border-slate-200/40 dark:border-slate-700/40 transition-all duration-300 hover:bg-white/80 dark:hover:bg-slate-800/80 hover:scale-105 hover:shadow-lg ${item.highlight ? 'ring-2 ring-slate-400/50 dark:ring-slate-500/50' : ''}`}
+                      className={`group bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border-2 ${skill.borderColor} transition-all duration-300 hover:bg-white/90 dark:hover:bg-slate-800/90 hover:scale-105 hover:shadow-xl ${item.highlight ? 'ring-2 ring-yellow-400/50' : ''} animate-fade-in-up delay-${i * 100}`}
                     >
-                      <div className="flex justify-between items-start mb-2 sm:mb-3 lg:mb-4">
-                        <div className="flex-1">
-                          <span className={`font-bold text-sm sm:text-base lg:text-lg ${skill.textOpacity} dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-white transition-colors leading-tight`}>
-                            {item.name}
-                          </span>
-                          {item.highlight && (
-                            <div className="flex items-center mt-1 sm:mt-2">
-                              <span className="text-yellow-500 text-xs sm:text-sm mr-1">✨</span>
-                              <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Core Expertise</span>
-                            </div>
-                          )}
-                        </div>
-                        <span className={`text-sm sm:text-base lg:text-lg font-bold px-2 sm:px-3 py-1 bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-800 rounded-full ${skill.textOpacity} transition-all duration-300 ${activeSkill === index ? 'scale-110' : ''}`}>
-                          {item.level}%
+                      <div className="text-center">
+                        <span className={`font-bold text-sm sm:text-base lg:text-lg ${skill.textColor} group-hover:scale-105 transition-transform leading-tight block`}>
+                          {item.name}
                         </span>
-                      </div>
-                      <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 sm:h-3 overflow-hidden">
-                        <div
-                          className="bg-gradient-to-r from-slate-600 to-slate-800 dark:from-slate-400 dark:to-slate-200 h-2 sm:h-3 rounded-full transition-all duration-1000 ease-out"
-                          style={{ width: `${item.level}%` }}
-                        ></div>
+                        {item.highlight && (
+                          <div className="flex items-center justify-center mt-2">
+                            <span className="text-yellow-500 text-sm mr-2 animate-pulse">✨</span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold">Core Expertise</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {index < 4 && (
-                  <div className={`absolute bottom-0 left-4 sm:left-6 lg:left-8 right-4 sm:right-6 lg:right-8 h-px ${skill.borderOpacity} dark:border-opacity-20 transition-opacity duration-300`}></div>
+                {/* Category Footer */}
+                {index < skillCategories.length - 1 && (
+                  <div className={`absolute bottom-0 left-6 sm:left-8 lg:left-10 right-6 sm:right-8 lg:right-10 h-px bg-gradient-to-r ${skill.gradient} opacity-20 transition-opacity duration-300`}></div>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="mt-10 sm:mt-12 lg:mt-16 xl:mt-20 text-center">
-            <div className="bg-slate-100/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-200/30 dark:border-slate-700/30">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800 dark:text-white mb-2 sm:mb-3 lg:mb-4">Ready to Collaborate?</h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-4 sm:mb-6 lg:mb-8 max-w-2xl mx-auto text-xs sm:text-sm lg:text-base">
-                Let's discuss how these skills can contribute to your next project or innovation challenge.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a
-                  href="/projects"
-                  className="bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-800 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-xl hover:bg-slate-700 dark:hover:bg-slate-300 transition-all duration-300 text-sm sm:text-base lg:text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform min-h-[48px] flex items-center justify-center"
-                >
-                  View Projects
-                </a>
-                <a
-                  href="/contact"
-                  className="border-2 border-slate-800 dark:border-slate-200 text-slate-800 dark:text-slate-200 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-xl hover:bg-slate-800 hover:text-white dark:hover:bg-slate-200 dark:hover:text-slate-800 transition-all duration-300 text-sm sm:text-base lg:text-lg font-semibold hover:scale-105 transform min-h-[48px] flex items-center justify-center"
-                >
-                  Start a Project
-                </a>
+          {/* Call to Action - Redesigned Layout */}
+          <div className="mt-16 sm:mt-20 lg:mt-24 animate-fade-in-up delay-800">
+            <div className="relative overflow-hidden bg-gradient-to-br from-slate-100/95 via-white/95 to-slate-50/95 dark:from-slate-800/95 dark:via-slate-700/95 dark:to-slate-900/95 backdrop-blur-sm rounded-3xl border border-slate-200/60 dark:border-slate-700/60 shadow-2xl">
+              {/* Animated Background Elements */}
+              <div className="absolute inset-0">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-400/15 to-purple-400/15 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-36 h-36 bg-gradient-to-br from-pink-400/15 to-indigo-400/15 rounded-full blur-3xl animate-pulse delay-700"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-br from-cyan-400/8 to-teal-400/8 rounded-full blur-2xl animate-bounce"></div>
+              </div>
+
+              <div className="relative z-10 p-8 sm:p-12 lg:p-16">
+                {/* Title Section */}
+                <div className="text-center mb-8 sm:mb-12">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 leading-tight">
+                    <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">
+                      Ready to Collaborate?
+                    </span>
+                  </h3>
+                </div>
+
+                {/* Description */}
+                <div className="text-center mb-4 sm:mb-6 lg:mb-8 max-w-2xl mx-auto">
+                  <p className="text-base sm:text-lg italic text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Let's discuss how these skills can contribute to your next project or innovation challenge. I'm excited to bring expertise and passion to your team.
+                  </p>
+                </div>
+
+                {/* Action Buttons - Enhanced Design */}
+                <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-center mb-8 sm:mb-10">
+                  <a
+                    href="/projects"
+                    className="group relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white px-10 sm:px-12 lg:px-16 py-5 sm:py-6 lg:py-7 rounded-3xl transition-all duration-500 text-sm sm:text-base font-bold shadow-2xl hover:shadow-purple-500/30 transform hover:scale-105 hover:-translate-y-2 min-h-[64px] flex items-center justify-center w-full sm:w-auto"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-4 animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    <span className="relative z-10">View Projects</span>
+                  </a>
+
+                  <a
+                    href="/contact"
+                    className="group relative border-2 border-slate-800 dark:border-slate-200 text-slate-800 dark:text-slate-200 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-200 dark:hover:text-slate-800 px-10 sm:px-12 lg:px-16 py-5 sm:py-6 lg:py-7 rounded-3xl transition-all duration-500 text-sm sm:text-base font-bold hover:scale-105 transform min-h-[64px] flex items-center justify-center w-full sm:w-auto"
+                  >
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-4 animate-spin-slow" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12,2L2,7L12,12L22,7L12,2M17,16L12,18.5L7,16V14L12,16.5L17,14V16M12,13.5L2,8.5V17.5L12,22.5L22,17.5V8.5L12,13.5Z"/>
+                    </svg>
+                    <span className="relative z-10">Start a Project</span>
+                  </a>
+                </div>
+
+                {/* Footer Info */}
+                <div className="text-center">
+                  <div className="inline-flex items-center italic justify-center space-x-2 bg-slate-100/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl px-6 py-3 border border-slate-200/30 dark:border-slate-700/30">
+                    <span className="text-xl animate-bounce">🚀</span>
+                    <span className="text-slate-600 dark:text-slate-300 font-medium">Open to exciting opportunities</span>
+                    <span className="text-slate-400 dark:text-slate-500">•</span>
+                    <span className="text-xl animate-pulse">📧</span>
+                    <span className="text-slate-600 dark:text-slate-300 font-medium">Quick response guaranteed</span>
+                    <span className="text-slate-400 dark:text-slate-500">•</span>
+                    <span className="text-xl animate-spin-slow">🌟</span>
+                    <span className="text-slate-600 dark:text-slate-300 font-medium">Let's build something amazing</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

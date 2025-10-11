@@ -197,29 +197,40 @@ export default function About() {
         )}
       </header>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16">
-        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center">About Mugabo</h1>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-400/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-indigo-400/5 rounded-full blur-xl animate-bounce"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center animate-fade-in-up">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              About Mugabo
+            </span>
+          </h1>
 
           {/* Who I Am & Expertise */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mb-8 sm:mb-12 lg:mb-16">
-            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
-                <span className="mr-2">👤</span> Who I Am
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-200">
+            <div className="group bg-gradient-to-br from-white/80 to-white/60 dark:from-slate-800/80 dark:to-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-200/50 dark:border-slate-700/50 hover:scale-105">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center animate-slide-in-left">
+                <span className="mr-2 text-2xl animate-bounce-subtle">👤</span> Who I Am
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed hover:text-slate-700 dark:hover:text-slate-300 transition-colors text-justify">
                 Hi, I'm Niyonshuti Martin - Mugabo, a passionate tech entrepreneur, AI practitioner, and SpaceTech enthusiast. My journey began with a curiosity for how technology can solve everyday problems, evolving into a mission to bridge AI, IoT, and real-world challenges. I'm the founder behind OpenClimate, where we use AI to predict disasters and build climate resilience in Africa, and RoutiQ, optimizing traffic for safer, greener cities.
               </p>
-              <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed hover:text-slate-700 dark:hover:text-slate-300 transition-colors text-justify">
                 As an entrepreneur, I thrive on launching ventures like eNeza Marketplace, turning ideas into scalable solutions. Whether building startups or collaborating on teams, I focus on creating systems that not only work but make a difference—saving lives, reducing emissions, and empowering communities. Let's connect if you're interested in innovative tech partnerships!
               </p>
             </div>
 
-            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
-                <span className="mr-2">🛠️</span> Key Expertise
+            <div className="group bg-gradient-to-br from-white/80 to-white/60 dark:from-slate-800/80 dark:to-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-200/50 dark:border-slate-700/50 hover:scale-105">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center animate-slide-in-right">
+                <span className="mr-2 text-2xl animate-bounce-subtle">🛠️</span> Key Expertise
               </h2>
-              <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-2 sm:space-y-3 text-sm sm:text-base">
+              <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-2 sm:space-y-3 text-sm sm:text-base hover:text-slate-700 dark:hover:text-slate-300 transition-colors text-justify">
                 <li><strong>AI:</strong> Building predictive models and data pipelines, as seen in OpenClimate's forecasting for disaster alerts and RoutiQ's traffic predictions.</li>
                 <li><strong>IoT/CPS:</strong> Designing embedded systems and device networks for real-time data in smart environments, like sensor integrations in my drone projects.</li>
                 <li><strong>Cybersecurity:</strong> Implementing threat detection and secure designs, ensuring robust systems in all my ventures from marketplace security to network vulnerabilities.</li>
@@ -229,31 +240,88 @@ export default function About() {
             </div>
           </div>
 
-          {/* Educational Background */}
-          <div className="mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center">Educational Journey</h2>
-            <div className="relative">
-              <div className="absolute left-4 sm:left-6 lg:left-8 top-0 bottom-0 w-1 bg-slate-600 hidden md:block"></div>
-              <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                {education.map((edu, index) => (
-                  <div key={index} className="flex items-start space-x-3 sm:space-x-4 relative">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-slate-600 rounded-full flex items-center justify-center text-white text-lg sm:text-xl lg:text-2xl flex-shrink-0">
-                      {edu.icon}
+          {/* Educational Journey */}
+          <div className="mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-400">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center animate-slide-in-left">
+              Educational Journey
+            </h2>
+
+            {/* Completed Education - Table Format */}
+            <div className="mb-8 sm:mb-10 lg:mb-12">
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-700 dark:text-slate-300 mb-4 sm:mb-6 text-center animate-fade-in-up">
+                Completed Education (2007-2025)
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl shadow-xl border border-slate-200/50 dark:border-slate-700/50">
+                  <thead className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                    <tr>
+                      <th className="px-4 py-3 sm:px-6 sm:py-4 text-left text-sm sm:text-base font-semibold">Period</th>
+                      <th className="px-4 py-3 sm:px-6 sm:py-4 text-left text-sm sm:text-base font-semibold">Level</th>
+                      <th className="px-4 py-3 sm:px-6 sm:py-4 text-left text-sm sm:text-base font-semibold">Institution</th>
+                      <th className="px-4 py-3 sm:px-6 sm:py-4 text-left text-sm sm:text-base font-semibold hidden md:table-cell">Location</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+                    {education.slice(0, 6).map((edu, index) => (
+                      <tr key={index} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                        <td className="px-4 py-3 sm:px-6 sm:py-4 text-slate-600 dark:text-slate-400 text-sm sm:text-base font-medium">{edu.period}</td>
+                        <td className="px-4 py-3 sm:px-6 sm:py-4 text-slate-800 dark:text-slate-200 text-sm sm:text-base">{edu.level}</td>
+                        <td className="px-4 py-3 sm:px-6 sm:py-4 text-slate-600 dark:text-slate-400 text-sm sm:text-base">
+                          <div>
+                            {edu.link !== "#" ? (
+                              <a href={edu.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors hover:underline">
+                                {edu.institution}
+                              </a>
+                            ) : (
+                              edu.institution
+                            )}
+                            {edu.level.includes("A'Level") && (
+                              <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                (PCM - Mathematics-Chemistry-Physics)
+                              </div>
+                            )}
+                            {edu.institution.includes("UR-CST") && (
+                              <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                Physics - Material Science
+                              </div>
+                            )}
+                            {edu.institution.includes("RUDN") && (
+                              <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                Faculty of Physics, Mathematics and Natural Sciences
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 sm:px-6 sm:py-4 text-slate-600 dark:text-slate-400 text-sm sm:text-base hidden md:table-cell">{edu.location}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Pursuing Education */}
+            <div className="mb-8 sm:mb-10 lg:mb-12">
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-700 dark:text-slate-300 mb-4 sm:mb-6 text-center animate-fade-in-up">
+                Pursuing Education (2025-2027)
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                {education.slice(6).map((edu, index) => (
+                  <div key={index + 6} className="group bg-gradient-to-br from-white/80 to-white/60 dark:from-slate-800/80 dark:to-slate-800/60 backdrop-blur-sm p-4 sm:p-5 lg:p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 hover:scale-105">
+                    <div className="flex items-center mb-3 sm:mb-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white text-lg sm:text-xl mr-3 sm:mr-4 animate-bounce-subtle">
+                        {edu.icon}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{edu.level}</h4>
+                        <p className="text-slate-600 dark:text-slate-400 text-sm">{edu.period}</p>
+                      </div>
                     </div>
-                    <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-5 lg:p-6 rounded-lg shadow-lg flex-1 hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-slate-800 dark:text-white mb-1 sm:mb-2">{edu.level}</h3>
-                      <p className="text-slate-600 dark:text-slate-400 font-medium text-sm sm:text-base">{edu.period}</p>
-                      <p className="text-slate-600 dark:text-slate-300 mb-1 text-sm sm:text-base">{edu.details}</p>
-                      <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-                        {edu.link !== "#" ? (
-                          <a href={edu.link} target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
-                            {edu.institution}
-                          </a>
-                        ) : (
-                          edu.institution
-                        )} {edu.location && `- ${edu.location}`}
-                      </p>
-                    </div>
+                    <p className="text-slate-600 dark:text-slate-300 mb-2 text-sm sm:text-base">{edu.details}</p>
+                    <a href={edu.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors text-sm hover:underline">
+                      {edu.institution}
+                    </a>
+                    {edu.location && <span className="text-slate-600 dark:text-slate-400 text-sm"> - {edu.location}</span>}
                   </div>
                 ))}
               </div>
@@ -261,49 +329,56 @@ export default function About() {
           </div>
 
           {/* Self-Taught & Future Plans */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mb-8 sm:mb-12 lg:mb-16">
-            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
-                <span className="mr-2">📖</span> Self-Taught Expertise
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-600">
+            <div className="group bg-gradient-to-br from-white/80 to-white/60 dark:from-slate-800/80 dark:to-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-200/50 dark:border-slate-700/50 hover:scale-105 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl animate-pulse"></div>
+
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center animate-slide-in-left relative z-10">
+                <span className="mr-2 text-2xl animate-bounce-subtle">📖</span> Self-Taught Expertise
               </h2>
-              <ul className="space-y-3 sm:space-y-4">
+              <ul className="space-y-3 sm:space-y-4 relative z-10">
                 {selfTaught.map((item, index) => (
-                  <li key={index} className="border-b border-slate-200 dark:border-slate-700 pb-3 sm:pb-4 last:border-b-0">
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 sm:mb-2">
-                      <span className="font-semibold text-slate-800 dark:text-white text-sm sm:text-base">{item.field}</span>
-                      <span className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1 sm:mt-0">{item.period}</span>
+                  <li key={index} className="border-b border-slate-200 dark:border-slate-700 pb-3 sm:pb-4 last:border-b-0 group hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg p-3 transition-all duration-300 hover:scale-105">
+                    <div className="mb-1 sm:mb-2">
+                      <span className="font-semibold text-slate-800 dark:text-white text-sm sm:text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{item.field}</span>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">{item.description}</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">{item.description}</p>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center">
-                <span className="mr-2">🔮</span> Future Aspirations
+            <div className="group bg-gradient-to-br from-white/80 to-white/60 dark:from-slate-800/80 dark:to-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-200/50 dark:border-slate-700/50 hover:scale-105 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl animate-pulse delay-500"></div>
+
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 flex items-center animate-slide-in-right relative z-10">
+                <span className="mr-2 text-2xl animate-bounce-subtle">🔮</span> Future Aspirations
               </h2>
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-3 sm:space-y-4 relative z-10">
                 {futurePlans.map((plan, index) => (
-                  <div key={index} className="border-b border-slate-200 dark:border-slate-700 pb-3 sm:pb-4 last:border-b-0">
-                    <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white mb-1">{plan.level}</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">{plan.period}</p>
+                  <div key={index} className="border-b border-slate-200 dark:border-slate-700 pb-3 sm:pb-4 last:border-b-0 group hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg p-3 transition-all duration-300 hover:scale-105">
+                    <h3 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-white mb-1 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">{plan.level}</h3>
                     <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mb-2">{plan.details}</p>
-                    <a href={plan.link} target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors text-xs sm:text-sm">
+                    <a href={plan.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors text-xs sm:text-sm hover:underline">
                       {plan.institution}
                     </a>
+                    {plan.location && <span className="text-slate-600 dark:text-slate-400 text-sm"> - {plan.location}</span>}
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="text-center animate-fade-in-up delay-800">
             <a
               href="/contact"
-              className="bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-slate-700 dark:hover:bg-slate-300 transition-all duration-300 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform min-h-[48px] flex items-center justify-center"
+              className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl transition-all duration-500 text-base sm:text-lg lg:text-xl font-bold shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 hover:-translate-y-1 min-h-[56px] flex items-center justify-center overflow-hidden"
             >
-              Let's Collaborate
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <span className="relative z-10 mr-2 text-xl animate-bounce-subtle">🚀</span>
+              <span className="relative z-10">Let's Collaborate</span>
             </a>
           </div>
         </div>
