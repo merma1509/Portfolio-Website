@@ -4,16 +4,16 @@
 
 > A modern, responsive personal portfolio website showcasing expertise in AI, IoT/CPS, cybersecurity, SpaceTech, and business. Designed for professionals, collaborators, and recruiters to highlight hands-on innovation and real-world impact.
 
-## 🌟 Features
+## Features
 
-- **🏠 Home**: Hero section with tagline, featured projects, and call-to-action.
-- **👤 About**: Detailed bio, expertise, educational background, and personality.
-- **📁 Projects**: Showcase of key works (OpenClimate, RoutiQ, eNeza Marketplace, Drone UAVs) with slogans, tech stacks, and outcomes.
-- **🛠️ Skills**: Interactive visualization of proficiencies in AI, IoT, cybersecurity, etc.
-- **🖼️ Gallery**: Visuals from projects, prototypes, and milestones.
-- **📞 Contact**: Integrated form for collaborations and inquiries.
-- **📱 Responsive Design**: Mobile-first with dark/light mode toggle.
-- **⚡ Performance**: SEO-optimized, fast-loading, and accessible.
+- **Home**: Hero section with tagline, featured projects, and call-to-action.
+- **About**: Detailed bio, expertise, educational background, and personality.
+- **Projects**: Showcase of key works (OpenClimate, RoutiQ, eNeza Marketplace, Drone UAVs) with slogans, tech stacks, and outcomes.
+- **Skills**: Interactive visualization of proficiencies in AI, IoT, cybersecurity, etc.
+- **Gallery**: Visuals from projects, prototypes, and milestones.
+- **Contact**: Integrated form for collaborations and inquiries.
+- **Responsive Design**: Mobile-first with dark/light mode toggle.
+- **Performance**: SEO-optimized, fast-loading, and accessible.
 
 ## Tech Stack
 
