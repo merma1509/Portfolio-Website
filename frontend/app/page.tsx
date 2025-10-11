@@ -118,11 +118,11 @@ export default function Home() {
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 items-center">
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-800 dark:text-white mb-2 sm:mb-3 md:mb-4 lg:mb-6 leading-tight">
-              I am a passionate Tech Entrepreneur dedicated to building innovative solutions.
+              Tech Entrepreneur,
               <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>As an AI Practitioner, I leverage machine learning to solve real-world problems.
-              <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>My expertise extends to SpaceTech, where I work on cutting-edge aerospace technologies.
+              <span className="sm:hidden"> </span>AI Practitioner,
+              <br className="hidden md:block" />
+              <span className="sm:hidden"> </span>SpaceTech Enthusiast
             </h2>
             <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 md:mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               <i>Bridging AI, IoT, and real-world impact. Expert in autonomous systems, drones-UAVs, and SpaceTech solutions.</i>
@@ -143,9 +143,10 @@ export default function Home() {
             </div>
           </div>
           <div className="order-1 lg:order-2 relative">
-            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto lg:mx-0 aspect-[4/3] bg-gradient-to-br from-slate-400 to-slate-600 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
-              <img src="/mugabo.jpg" alt="Mugabo's profile photo" className="w-full h-full object-cover" />
+            <div className="w-full aspect-[4/3] bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg shadow-xl">
+              <img src="/mugabo.jpg" alt="Mugabo's profile photo" className="w-full h-full object-contain rounded-lg" />
             </div>
+            {/* Placeholder for profile image */}
           </div>
         </div>
 
