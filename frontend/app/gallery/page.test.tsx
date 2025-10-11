@@ -6,7 +6,7 @@ describe('Gallery Page', () => {
     render(<Gallery />)
 
     // Check if main page heading is present (more specific than navigation link)
-    expect(screen.getByRole('heading', { name: 'Gallery' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Project Gallery' })).toBeInTheDocument()
   })
 
   it('displays gallery content', () => {
@@ -23,6 +23,6 @@ describe('Gallery Page', () => {
     // Check for specific gallery items
     expect(screen.getAllByText('OpenClimate Dashboard').length).toBeGreaterThan(0)
     expect(screen.getAllByText('RoutiQ App Interface').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('eNeza Marketplace Demo').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('eNeza MarketPlace Demo').length).toBeGreaterThan(0)
   })
 })

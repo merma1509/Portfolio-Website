@@ -49,7 +49,7 @@ export default function Gallery() {
       icon: "🚗"
     },
     {
-      title: "eNeza Marketplace Demo",
+      title: "eNeza MarketPlace Demo",
       description: "Screenshots of the e-commerce platform in action.",
       type: "image",
       src: "/images/eneza-marketplace.jpg",
@@ -65,8 +65,8 @@ export default function Gallery() {
       icon: "🚁"
     },
     {
-      title: "University Project Presentation",
-      description: "Presenting AI project at university for credibility and knowledge sharing.",
+      title: "University Project",
+      description: "Presenting project at university for credibility and knowledge sharing.",
       type: "image",
       src: "/images/innopolis.jpg",
       alt: "Presenting AI project",
@@ -137,39 +137,112 @@ export default function Gallery() {
         )}
       </header>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16">
-        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center">Gallery</h1>
-          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-8 sm:mb-12 lg:mb-16 text-center max-w-4xl mx-auto px-2">
-            Visual journey through my projects, prototypes, and milestones. From AI dashboards to drone hardware, see the tech in action.
-          </p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-400/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-indigo-400/5 rounded-full blur-xl animate-bounce"></div>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+          {/* Hero Section */}
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">
+                Project Gallery
+              </span>
+            </h1>
+            {/*<div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full animate-pulse"></div>*/}
+            <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 mt-4 sm:mt-6 max-w-4xl mx-auto leading-relaxed">
+              Visual journey through my projects, prototypes, and milestones. From AI dashboards to drone hardware, see the tech in action.
+            </p>
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 animate-fade-in-up delay-200">
             {galleryItems.map((item, index) => (
-              <div key={index} className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-slate-200/40 dark:border-slate-700/40 group">
-                <div className="w-full h-40 sm:h-48 lg:h-56 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 rounded-lg mb-3 sm:mb-4 lg:mb-6 flex items-center justify-center relative overflow-hidden">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-slate-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-lg sm:text-xl lg:text-2xl">{item.icon}</span>
+              <div key={index} className="group bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-slate-200/50 dark:border-slate-700/50 hover:scale-105 relative overflow-hidden">
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-lg animate-pulse"></div>
+
+                {/* Image Container */}
+                <div className="relative w-full h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-lg mb-3 sm:mb-4 lg:mb-6 overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
+                  {/* Placeholder Icon */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white text-2xl sm:text-3xl lg:text-4xl animate-bounce-subtle">{item.icon}</span>
+                    </div>
                   </div>
-                  {/* Placeholder for actual image when available */}
-                  <div className="absolute inset-0 bg-slate-100 dark:bg-slate-800 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="text-slate-500 dark:text-slate-400 text-sm sm:text-base">Image Coming Soon</span>
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="text-center p-4">
+                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-2">
+                        <svg className="w-6 h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                        </svg>
+                      </div>
+                      <p className="text-white text-sm sm:text-base font-medium">View Project</p>
+                    </div>
+                  </div>
+
+                  {/* Image Placeholder Text */}
+                  <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Image Preview
                   </div>
                 </div>
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-slate-800 dark:text-white mb-1 sm:mb-2">{item.title}</h3>
-                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">{item.description}</p>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800 dark:text-white mb-2 sm:mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm italic leading-relaxed text-justify mb-3 sm:mb-4">
+                    {item.description}
+                  </p>
+
+                  {/* Action Button */}
+                  <a
+                    href={`/projects#${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 text-center"
+                  >
+                    View Details
+                  </a>
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 sm:mt-12 lg:mt-16 text-center">
-            <p className="text-slate-600 dark:text-slate-300 mb-4 sm:mb-6 text-sm sm:text-base lg:text-lg">More visuals and updates as projects evolve!</p>
-            <a
-              href="/projects"
-              className="bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-slate-700 dark:hover:bg-slate-300 transition-all duration-300 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform min-h-[48px] flex items-center justify-center"
-            >
-              Explore Projects
-            </a>
+          {/* Call to Action */}
+          <div className="mt-8 sm:mt-12 lg:mt-16 text-center animate-fade-in-up delay-600">
+            <div className="bg-gradient-to-br from-slate-100/50 to-slate-50/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-sm p-6 sm:p-8 lg:p-10 rounded-3xl border border-slate-200/30 dark:border-slate-700/30">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white mb-3 sm:mb-4">
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  More Projects Coming Soon
+                </span>
+              </h3>
+              <p className="text-slate-600 dark:text-slate-300 mb-4 sm:mb-6 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto">
+                As projects evolve and new innovations emerge, this gallery will showcase the latest visuals and prototypes.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <a
+                  href="/projects"
+                  className="group relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-500 text-base sm:text-lg font-bold shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 hover:-translate-y-1 min-h-[48px] flex items-center justify-center"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                  <span className="relative z-10 mr-2 text-lg animate-bounce-subtle">🚀</span>
+                  <span className="relative z-10">Explore Projects</span>
+                </a>
+                <a
+                  href="/contact"
+                  className="group relative border-2 border-slate-800 dark:border-slate-200 text-slate-800 dark:text-slate-200 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-200 dark:hover:text-slate-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-500 text-base sm:text-lg font-bold hover:scale-105 transform min-h-[48px] flex items-center justify-center"
+                >
+                  <span className="relative z-10 mr-2 text-lg animate-spin-slow">💬</span>
+                  <span className="relative z-10">Discuss Collaboration</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

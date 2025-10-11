@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { countries } from '@/lib/countries';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '', occupation: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [status, setStatus] = useState('');
@@ -111,7 +111,7 @@ export default function Contact() {
 
       if (response.ok) {
         setStatus('✓ Message sent successfully!');
-        setFormData({ name: '', email: '', message: '', phone: '' });
+        setFormData({ name: '', email: '', message: '', phone: '', occupation: '' });
         setSelectedCountry({ code: '+250', flag: '🇷🇼', name: 'Rwanda' });
 
         // Clear success message after 5 seconds
@@ -197,149 +197,259 @@ export default function Contact() {
         )}
       </header>
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16">
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-6 sm:mb-8 text-center">Contact</h1>
-          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-8 sm:mb-12 lg:mb-16 text-center max-w-4xl mx-auto px-2">
-            Let's discuss collaborations, opportunities, or innovative ideas. I'm always open to new projects and partnerships that drive tech forward.
-          </p>
-
-          <div className="max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-16">
-            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg border border-slate-200/40 dark:border-slate-700/40">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 flex items-center">
-                <span className="mr-2">📧</span> Send a Message
-              </h2>
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-slate-700 dark:text-slate-300 mb-2 font-medium text-sm sm:text-base">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={`w-full p-3 sm:p-4 border rounded-lg bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-slate-500 focus:border-transparent ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-sm sm:text-base`}
-                    required
-                  />
-                  {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>}
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-slate-700 dark:text-slate-300 mb-2 font-medium text-sm sm:text-base">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`w-full p-3 sm:p-4 border rounded-lg bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-slate-500 focus:border-transparent ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-sm sm:text-base`}
-                    required
-                  />
-                  {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-slate-700 dark:text-slate-300 mb-2 font-medium text-sm sm:text-base">Phone</label>
-                  <div className="flex">
-                    <select
-                      value={selectedCountry.code}
-                      onChange={(e) => {
-                        const country = countries.find(c => c.code === e.target.value);
-                        if (country) setSelectedCountry(country);
-                      }}
-                      className="flex-shrink-0 p-3 sm:p-4 border border-slate-300 dark:border-slate-600 rounded-l-lg bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-slate-500 focus:border-transparent text-sm sm:text-base"
-                    >
-                      {countries.map((country) => (
-                        <option key={country.code} value={country.code}>
-                          {country.flag} {country.code}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className={`flex-1 p-3 sm:p-4 border border-l-0 border-slate-300 dark:border-slate-600 rounded-r-lg bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-slate-500 focus:border-transparent ${errors.phone ? 'border-red-500' : ''} text-sm sm:text-base`}
-                    />
-                  </div>
-                  {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phone}</p>}
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-slate-700 dark:text-slate-300 mb-2 font-medium text-sm sm:text-base">Message</label>
-                  <textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`w-full p-3 sm:p-4 border rounded-lg bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-slate-500 focus:border-transparent ${errors.message ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-sm sm:text-base`}
-                    rows={5}
-                    required
-                  />
-                  {errors.message && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>}
-                  <p className="mt-1 text-xs sm:text-sm text-slate-500">
-                    {formData.message.trim().split(/\s+/).filter(word => word.length > 0).length}/10 words minimum
-                  </p>
-                </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full py-3 sm:py-4 rounded-lg transition font-semibold text-sm sm:text-base min-h-[48px] flex items-center justify-center ${
-                    isSubmitting
-                      ? 'bg-slate-400 text-slate-600 cursor-not-allowed'
-                      : 'bg-slate-600 hover:bg-slate-700 text-white'
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-slate-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Sending...
-                    </span>
-                  ) : (
-                    'Send Message'
-                  )}
-                </button>
-              </form>
-              {status && <p className={`mt-4 text-center font-medium text-sm sm:text-base ${status.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{status}</p>}
-            </div>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-6 sm:py-8 lg:py-16 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-400/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-indigo-400/5 rounded-full blur-xl animate-bounce"></div>
         </div>
 
-        <footer className="bg-slate-100/50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700 py-6 sm:py-8 lg:py-12">
-          <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 relative z-10">
+          {/* Hero Section */}
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x">
+                Get In Touch
+              </span>
+            </h1>
+            {/*<div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full animate-pulse"></div>*/}
+            <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 mt-4 sm:mt-6 max-w-4xl mx-auto leading-relaxed">
+              Let's discuss collaborations, opportunities, or innovative ideas. I'm always open to new projects and partnerships that solve real-world problems.
+            </p>
+          </div>
+
+          {/* Contact Methods Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-200">
+            <div className="group bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-blue-200/50 dark:border-blue-700/30 hover:scale-105 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-lg animate-pulse"></div>
+              <div className="relative z-10 text-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white mb-1 sm:mb-2">Email</h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-3">niyonmartin@yandex.ru</p>
+                <a href="mailto:niyonmartin@yandex.ru" className="inline-block bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105">
+                  Send Email
+                </a>
+              </div>
+            </div>
+
+            <div className="group bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-green-200/50 dark:border-green-700/30 hover:scale-105 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-green-400/20 to-transparent rounded-full blur-lg animate-pulse delay-500"></div>
+              <div className="relative z-10 text-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white mb-1 sm:mb-2">Phone</h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-3">Available for calls</p>
+                <a href="tel:+250788123456" className="inline-block bg-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-green-700 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105">
+                  Call Now
+                </a>
+              </div>
+            </div>
+
+            <div className="group bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-blue-200/50 dark:border-blue-700/30 hover:scale-105 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-lg animate-pulse delay-1000"></div>
+              <div className="relative z-10 text-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white mb-1 sm:mb-2">LinkedIn</h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-3">Professional networking</p>
+                <a href="https://linkedin.com/in/nshuti-martin15" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105">
+                  Connect
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form Section */}
+          <div className="max-w-4xl mx-auto mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-400">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-3xl shadow-2xl border border-slate-200/50 dark:border-slate-700/50 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-pink-400/20 to-indigo-400/20 rounded-full blur-xl animate-pulse delay-500"></div>
+
+              <div className="relative z-10">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 text-center flex items-center justify-center">
+                  <span className="mr-3 text-3xl animate-bounce-subtle">📧</span>
+                  Send a Message
+                </h2>
+
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="animate-fade-in-up delay-200">
+                      <label htmlFor="name" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                        Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                        required
+                      />
+                      {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.name}</p>}
+                    </div>
+
+                    <div className="animate-fade-in-up delay-300">
+                      <label htmlFor="email" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                        required
+                      />
+                      {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.email}</p>}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col md:flex-row gap-3 sm:gap-4 animate-fade-in-up delay-350">
+                    <div className="flex-1">
+                      <label htmlFor="occupation" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                        Occupation
+                      </label>
+                      <select
+                        id="occupation"
+                        value={formData.occupation}
+                        onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
+                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 ${errors.occupation ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg shadow-sm hover:shadow-md`}
+                      >
+                        <option value="">Select Occupation</option>
+                        <option value="investor">Investor</option>
+                        <option value="looking for a job">Looking for a Job</option>
+                        <option value="team member">Team Member</option>
+                        <option value="collaborator">Collaborator</option>
+                        <option value="client">Client</option>
+                        <option value="other">Other</option>
+                      </select>
+                      {errors.occupation && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.occupation}</p>}
+                    </div>
+
+                    <div className="flex-1">
+                      <label htmlFor="phone" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                        Phone Number
+                      </label>
+                      <div className="flex">
+                        <select
+                          value={selectedCountry.code}
+                          onChange={(e) => {
+                            const country = countries.find(c => c.code === e.target.value);
+                            if (country) setSelectedCountry(country);
+                          }}
+                          className="flex-shrink-0 p-3 sm:p-4 border-2 border-r-0 border-slate-300 dark:border-slate-600 rounded-l-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent text-base sm:text-lg transition-all duration-300"
+                        >
+                          {countries.map((country) => (
+                            <option key={country.code} value={country.code}>
+                              {country.flag} {country.code}
+                            </option>
+                          ))}
+                        </select>
+                        <input
+                          type="tel"
+                          id="phone"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className={`flex-1 p-3 sm:p-4 border-2 border-l-0 rounded-r-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                        />
+                      </div>
+                      {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.phone}</p>}
+                    </div>
+                  </div>
+
+                  <div className="animate-fade-in-up delay-500">
+                    <label htmlFor="message" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.message ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                      rows={6}
+                      required
+                    />
+                    {errors.message && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.message}</p>}
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                      {formData.message.trim().split(/\s+/).filter(word => word.length > 0).length}/10 words minimum
+                    </p>
+                  </div>
+
+                  <div className="flex justify-center animate-fade-in-up delay-600">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl transition-all duration-500 font-bold text-lg sm:text-xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 hover:-translate-y-1 min-h-[56px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                      <span className="relative z-10 mr-2 text-xl animate-bounce-subtle">
+                        {isSubmitting ? '⏳' : '🚀'}
+                      </span>
+                      <span className="relative z-10">
+                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                      </span>
+                    </button>
+                  </div>
+                </form>
+                {status && <p className={`mt-4 text-center font-medium text-base sm:text-lg ${status.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{status}</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* Social Links Section */}
+          <div className="text-center animate-fade-in-up delay-800">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Connect With Me
+              </span>
+            </h3>
             <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 lg:gap-8">
               <a href="mailto:niyonmartin@yandex.ru" className="group">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                   </svg>
                 </div>
               </a>
 
               <a href="https://linkedin.com/in/nshuti-martin15" className="group" target="_blank" rel="noopener noreferrer">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </div>
               </a>
 
               <a href="https://instagram.com/nshuti-martin15" className="group" target="_blank" rel="noopener noreferrer">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-500 via-purple-500 to-orange-400 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-500 via-purple-500 to-orange-400 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                 </div>
               </a>
 
               <a href="https://github.com/merma1509" className="group" target="_blank" rel="noopener noreferrer">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                 </div>
               </a>
             </div>
           </div>
-        </footer>
+        </div>
       </div>
     </>
   );
