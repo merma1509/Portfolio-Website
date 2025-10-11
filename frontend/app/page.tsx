@@ -118,11 +118,11 @@ export default function Home() {
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 items-center">
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-800 dark:text-white mb-2 sm:mb-3 md:mb-4 lg:mb-6 leading-tight">
-              Tech Entrepreneur,
+              I am a passionate Tech Entrepreneur dedicated to building innovative solutions.
               <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>AI Practitioner,
-              <br className="hidden md:block" />
-              <span className="sm:hidden"> </span>SpaceTech Enthusiast
+              <span className="sm:hidden"> </span>As an AI Practitioner, I leverage machine learning to solve real-world problems.
+              <br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>My expertise extends to SpaceTech, where I work on cutting-edge aerospace technologies.
             </h2>
             <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 md:mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               <i>Bridging AI, IoT, and real-world impact. Expert in autonomous systems, drones-UAVs, and SpaceTech solutions.</i>
@@ -143,41 +143,8 @@ export default function Home() {
             </div>
           </div>
           <div className="order-1 lg:order-2 relative">
-            {/* Enhanced Profile Image Container */}
-            <div className="relative mx-auto lg:mx-0 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-              {/* Decorative background elements */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600 dark:from-slate-400 dark:via-slate-300 dark:to-slate-400 rounded-3xl blur-lg opacity-20 animate-pulse"></div>
-              <div className="absolute -inset-2 bg-gradient-to-br from-slate-300 to-slate-500 dark:from-slate-600 dark:to-slate-800 rounded-2xl opacity-40"></div>
-
-              {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-slate-700 dark:via-slate-800 dark:to-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden border-2 border-slate-200/50 dark:border-slate-600/50 backdrop-blur-sm">
-                {/* Animated border gradient */}
-                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 dark:from-slate-300 dark:via-slate-400 dark:to-slate-500 opacity-20 animate-pulse"></div>
-
-                {/* Profile image */}
-                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-slate-400 to-slate-600 dark:from-slate-500 dark:to-slate-700 aspect-[4/3]">
-                  <img
-                    src="/mugabo.jpg"
-                    alt="Mugabo's profile photo"
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                  />
-
-                  {/* Overlay gradient for better text readability if needed */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-
-                {/* Floating badge */}
-                <div className="absolute -top-3 -right-3 bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-200 dark:to-slate-100 text-white dark:text-slate-800 px-3 py-1 rounded-full text-xs font-semibold shadow-lg animate-bounce">
-                  👋 Hi!
-                </div>
-
-                {/* Decorative corner elements */}
-                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-slate-600 dark:border-slate-300 rounded-tl-lg opacity-60"></div>
-                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-slate-600 dark:border-slate-300 rounded-br-lg opacity-60"></div>
-              </div>
-
-              {/* Reflection effect */}
-              <div className="absolute inset-x-0 -bottom-2 h-4 bg-gradient-to-t from-slate-200/30 to-transparent dark:from-slate-700/30 rounded-b-2xl blur-sm"></div>
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto lg:mx-0 aspect-[4/3] bg-gradient-to-br from-slate-400 to-slate-600 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
+              <img src="/mugabo.jpg" alt="Mugabo's profile photo" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
