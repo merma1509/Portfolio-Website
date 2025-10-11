@@ -1,6 +1,6 @@
 # Personal Portfolio Website for Mugabo
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=flat&logo=next.js)](https://nextjs.org/)[![FastAPI](https://img.shields.io/badge/FastAPI-0.118-green?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-blue?style=flat&logo=tailwind-css)](https://tailwindcss.com/)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![GitHub Stars](https://img.shields.io/github/stars/merma1509/Portfolio-Website?style=social)](https://github.com/merma1509/Portfolio-Website)
+[![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=flat&logo=next.js)](https://nextjs.org/)[![FastAPI](https://img.shields.io/badge/FastAPI-0.118-green?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-blue?style=flat&logo=tailwind-css)](https://tailwindcss.com/)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![GitHub Stars](https://img.shields.io/github/stars/merma1509/?style=social)](https://github.com/merma1509/)
 
 > A modern, responsive personal portfolio website showcasing expertise in AI, IoT/CPS, cybersecurity, SpaceTech, and business. Designed for professionals, collaborators, and recruiters to highlight hands-on innovation and real-world impact.
 
