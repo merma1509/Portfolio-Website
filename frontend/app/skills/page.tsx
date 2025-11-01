@@ -212,13 +212,6 @@ export default function Skills() {
                     <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${skill.textColor} mb-3 transition-all duration-300 ${activeSkill === index ? 'scale-105' : ''}`}>
                       {skill.category}
                     </h2>
-                    {/*
-                    <div className="w-16 sm:w-20 lg:w-24 h-2 bg-gradient-to-r from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-500 rounded-full overflow-hidden">
-                      <div
-                        className={`w-full h-full bg-gradient-to-r ${skill.gradient} rounded-full transition-all duration-1000 ease-out`}
-                        style={{width: `${100 - (skill.category.length)}%`}}
-                      ></div>
-                    </div> */}
                   </div>
                   <div className={`text-3xl sm:text-4xl lg:text-5xl transition-all duration-300 ${activeSkill === index ? 'scale-125 animate-spin' : 'scale-100'}`}>
                     ⭐
@@ -308,15 +301,15 @@ export default function Skills() {
 
                 {/* Footer Info */}
                 <div className="text-center">
-                  <div className="inline-flex items-center italic justify-center space-x-2 bg-slate-100/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl px-6 py-3 border border-slate-200/30 dark:border-slate-700/30">
-                    <span className="text-xl animate-bounce">🚀</span>
-                    <span className="text-slate-600 dark:text-slate-300 font-medium">Open to exciting opportunities</span>
-                    <span className="text-slate-400 dark:text-slate-500">•</span>
-                    <span className="text-xl animate-pulse">📧</span>
-                    <span className="text-slate-600 dark:text-slate-300 font-medium">Quick response guaranteed</span>
-                    <span className="text-slate-400 dark:text-slate-500">•</span>
-                    <span className="text-xl animate-spin-slow">🌟</span>
-                    <span className="text-slate-600 dark:text-slate-300 font-medium">Let's build something amazing</span>
+                  <div className="flex flex-col sm:flex-row sm:inline-flex items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2 bg-slate-100/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl px-4 sm:px-6 py-3 sm:py-4 border border-slate-200/30 dark:border-slate-700/30 max-w-full">
+                    <span className="text-lg sm:text-xl animate-bounce">🚀</span>
+                    <span className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium">Open to exciting opportunities</span>
+                    <span className="hidden sm:inline text-slate-400 dark:text-slate-500">•</span>
+                    <span className="text-lg sm:text-xl animate-pulse">📧</span>
+                    <span className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium">Quick response guaranteed</span>
+                    <span className="hidden sm:inline text-slate-400 dark:text-slate-500">•</span>
+                    <span className="text-lg sm:text-xl animate-spin-slow">🌟</span>
+                    <span className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium">Let's build something amazing</span>
                   </div>
                 </div>
               </div>
