@@ -1,9 +1,7 @@
-import sys
-sys.path.append('..')
 from fastapi import APIRouter, HTTPException
 from models import Feedback
 from database import get_db
-from datetime import datetime
+from datetime import datetime, timezone
 
 router = APIRouter()
 
@@ -15,7 +13,7 @@ async def submit_feedback(feedback: Feedback):
             cur.execute('''
                 INSERT INTO feedback (type, content, rating, created_at)
                 VALUES (%s, %s, %s, %s)
-            ''', (feedback.type, feedback.content, feedback.rating, datetime.now()))
+            ''', (feedback.type, feedback.content, feedback.rating, datetime.now(timezone.utc)))
         conn.commit()
         conn.close()
         return {"message": "Feedback sent successfully"}

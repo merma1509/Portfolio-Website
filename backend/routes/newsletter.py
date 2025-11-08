@@ -1,5 +1,3 @@
-import sys
-sys.path.append('..')
 from fastapi import APIRouter, HTTPException
 from models import NewsletterSubscriber
 from database import get_db

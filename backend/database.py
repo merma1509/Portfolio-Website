@@ -1,26 +1,55 @@
 import os
+import asyncpg
+from typing import AsyncGenerator, Optional, Dict, Any
+from contextlib import asynccontextmanager
 
-try:
-    import psycopg2
-    from psycopg2.extras import RealDictCursor
-except ImportError:
-    try:
-        import psycopg2_binary as psycopg2
-        from psycopg2.extras import RealDictCursor
-    except ImportError:
-        print("Error: Could not import psycopg2. Please install with: pip install psycopg2-binary")
-        raise ImportError("psycopg2 not available")
-
+# Database URL from environment variable or default
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://mugabo15:15052000@localhost:5432/portfolio_db")
 
-def get_db():
-    conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
-    return conn
+# Database connection pool
+_pool: Optional[asyncpg.Pool] = None
 
-def init_db():
-    conn = get_db()
-    with conn.cursor() as cur:
-        cur.execute('''
+async def get_db() -> AsyncGenerator[asyncpg.Connection, None]:
+    """
+    Get a database connection from the pool.
+    
+    Yields:
+        asyncpg.Connection: A database connection from the pool
+    """
+    global _pool
+    if _pool is None:
+        _pool = await asyncpg.create_pool(
+            dsn=DATABASE_URL,
+            min_size=1,
+            max_size=10,
+            command_timeout=60,
+            server_settings={
+                'application_name': 'portfolio_backend',
+                'search_path': 'public'
+            }
+        )
+    
+    conn = await _pool.acquire()
+    try:
+        # Set up row factory to return dictionaries
+        def dict_factory(record):
+            return {k: v for k, v in record.items()}
+        
+        # Set row factory
+        conn._con._row_factory = dict_factory
+        
+        yield conn
+    finally:
+        await _pool.release(conn)
+
+async def init_db():
+    """Initialize the database and create tables if they don't exist."""
+    # Create a direct connection for initialization
+    conn = await asyncpg.connect(DATABASE_URL)
+    
+    try:
+        # Create tables if they don't exist
+        await conn.execute('''
             CREATE TABLE IF NOT EXISTS contact_messages (
                 id SERIAL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -30,7 +59,8 @@ def init_db():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-        cur.execute('''
+        
+        await conn.execute('''
             CREATE TABLE IF NOT EXISTS newsletter_subscribers (
                 id SERIAL PRIMARY KEY,
                 name TEXT NOT NULL,
@@ -38,7 +68,8 @@ def init_db():
                 subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-        cur.execute('''
+        
+        await conn.execute('''
             CREATE TABLE IF NOT EXISTS project_inquiries (
                 id SERIAL PRIMARY KEY,
                 project_name TEXT NOT NULL,
@@ -50,7 +81,24 @@ def init_db():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-        cur.execute('''
+        
+        # Create indexes for better query performance
+        await conn.execute('''
+            CREATE INDEX IF NOT EXISTS idx_project_inquiries_email 
+            ON project_inquiries (email)
+        ''')
+        
+        await conn.execute('''
+            CREATE INDEX IF NOT EXISTS idx_contact_messages_email 
+            ON contact_messages (email)
+        ''')
+        
+        await conn.execute('''
+            CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email 
+            ON newsletter_subscribers (email)
+        ''')
+        
+        await conn.execute('''
             CREATE TABLE IF NOT EXISTS feedback (
                 id SERIAL PRIMARY KEY,
                 type TEXT NOT NULL,
@@ -59,7 +107,8 @@ def init_db():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-        cur.execute('''
+        
+        await conn.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
                 username TEXT UNIQUE NOT NULL,
@@ -68,7 +117,8 @@ def init_db():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-        cur.execute('''
+        
+        await conn.execute('''
             CREATE TABLE IF NOT EXISTS blogs (
                 id SERIAL PRIMARY KEY,
                 title TEXT NOT NULL,
@@ -78,7 +128,15 @@ def init_db():
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-    conn.commit()
-    conn.close()
+        
+        print("Database tables created/verified successfully")
+        
+    except Exception as e:
+        print(f"Error initializing database: {e}")
+        raise
+    finally:
+        await conn.close()
 
-init_db()
+# Initialize the database when this module is imported
+import asyncio
+asyncio.get_event_loop().run_until_complete(init_db())

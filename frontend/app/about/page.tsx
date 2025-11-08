@@ -55,7 +55,7 @@ export default function About() {
       period: "2016 - 2017",
       details: "S4 - S5",
       institution: "Groupe Scolaire Rambura (G)",
-      location: "Nyabihu",
+      location: "Rambura-Nyabihu",
       link: "#",
       icon: "🎓"
     },
@@ -64,7 +64,7 @@ export default function About() {
       period: "2018",
       details: "S6",
       institution: "Ecole Secondaire de Kidaho",
-      location: "Burera",
+      location: "Kidaho-Burera",
       link: "#",
       icon: "🎓"
     },
@@ -107,10 +107,10 @@ export default function About() {
   ];
 
   const selfTaught = [
-    { field: "Data Science", period: "2021 - 2025", description: "Self-learned through online courses, projects, and hands-on experimentation." },
-    { field: "Programming", period: "2021 - 2025", description: "Mastered languages like Python, JavaScript, and frameworks for full-stack development." },
-    { field: "Business Entrepreneurship", period: "2021 - 2025", description: "Built ventures like eNeza Marketplace, focusing on scalable tech solutions." },
-    { field: "Cybersecurity", period: "2021 - 2025", description: "Studied threat detection, secure systems, and practical security implementations." }
+    { field: "Data Science", period: "2021 - 2025", description: "Self-learned through online courses, projects, books reading, and hands-on experimentation." },
+    { field: "Programming", period: "2021 - 2025", description: "Mastered languages like Python, SQL, C++, and related frameworks." },
+    { field: "Business & Entrepreneurship", period: "2021 - 2025", description: "Built ventures like eNeza MarketPlace, focusing on scalable tech solutions." },
+    { field: "Cybersecurity", period: "2021 - 2025", description: "Studied threat detection, penetration testing, secure systems, and practical security implementations." }
   ];
 
   const futurePlans = [
@@ -231,11 +231,11 @@ export default function About() {
                 <span className="mr-2 text-2xl animate-bounce-subtle">🛠️</span> Key Expertise
               </h2>
               <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-2 sm:space-y-3 text-sm sm:text-base hover:text-slate-700 dark:hover:text-slate-300 transition-colors text-justify">
-                <li><strong>AI:</strong> Building predictive models and data pipelines, as seen in OpenClimate's forecasting for disaster alerts and RoutiQ's traffic predictions.</li>
-                <li><strong>IoT/CPS:</strong> Designing embedded systems and device networks for real-time data in smart environments, like sensor integrations in my drone projects.</li>
-                <li><strong>Cybersecurity:</strong> Implementing threat detection and secure designs, ensuring robust systems in all my ventures from marketplace security to network vulnerabilities.</li>
+                <li><strong>Artificial Intelligence:</strong> Building predictive models and data pipelines, as being seen in OpenClimate's forecasting for disaster alerts and RoutiQ's traffic predictions.</li>
+                <li><strong>Internet of Things/ Cyber Physical Systems:</strong> Designing embedded systems and device networks for real-time data in smart environments, like sensor integrations in my drone projects.</li>
+                <li><strong>Cybersecurity:</strong> Implementing threat detection and secure designs, ensuring robust systems in all ventures from marketplace security to network vulnerabilities.</li>
                 <li><strong>SpaceTech:</strong> Developing autonomous navigation and drone technologies, aligning with my long-term UAV goals and satellite system interests.</li>
-                <li><strong>Business:</strong> Scaling tech solutions through entrepreneurship, project management, and strategic alignment, as demonstrated in eNeza's market growth and OpenClimate's community impact.</li>
+                <li><strong>Business:</strong> Scaling tech solutions through entrepreneurship, project management, and strategic alignment, as being demonstrated in eNeza's market growth and OpenClimate's community impact.</li>
               </ul>
             </div>
           </div>

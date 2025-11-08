@@ -1,9 +1,7 @@
-import sys
-sys.path.append('..')
 from fastapi import APIRouter, HTTPException
 from models import User
 from database import get_db
-from datetime import datetime
+from datetime import datetime, timezone
 
 router = APIRouter()
 
@@ -15,7 +13,7 @@ async def register_user(user: User):
             cur.execute('''
                 INSERT INTO users (username, email, password_hash, created_at)
                 VALUES (%s, %s, %s, %s)
-            ''', (user.username, user.email, user.password, datetime.now()))  # Note: Hash password in production
+            ''', (user.username, user.email, user.password, datetime.now(timezone.utc))) 
         conn.commit()
         conn.close()
         return {"message": "User registered successfully"}

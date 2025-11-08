@@ -3,10 +3,33 @@
 import { useState, useEffect } from 'react';
 import { countries } from '@/lib/countries';
 
+interface FormData {
+  project_name?: string;
+  name: string;
+  email: string;
+  message?: string;
+  inquiry?: string;
+  phone?: string;
+  occupation?: string;
+}
+
+interface FormErrors {
+  [key: string]: string | string[];
+}
+
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '', occupation: '' });
+  const [formType, setFormType] = useState<'contact' | 'inquiry'>('contact');
+  const [formData, setFormData] = useState<FormData>({
+    project_name: '',
+    name: '',
+    email: '',
+    message: '',
+    inquiry: '',
+    phone: '',
+    occupation: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState('');
   const [theme, setTheme] = useState('light');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,7 +59,7 @@ export default function Contact() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const [selectedCountry, setSelectedCountry] = useState({ code: '+7', flag: '🇷🇺', name: 'Russia' });
+  const [selectedCountry, setSelectedCountry] = useState({ code: '+250', flag: '🇷🇼', name: 'Rwanda' });
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -57,85 +80,246 @@ export default function Contact() {
     }
 
     // Phone validation - allow international formats
-    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,15}$/;
+    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{9,12}$/;
     if (formData.phone.trim() && !phoneRegex.test(formData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid phone number (10-15 digits)';
+      newErrors.phone = 'Please enter a valid phone number (9-12 digits)';
     }
 
-    // Message validation - minimum 10 words
-    const wordCount = formData.message.trim().split(/\s+/).filter(word => word.length > 0).length;
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+    // Project Name validation (for inquiry form)
+    if (formType === 'inquiry' && !formData.project_name.trim()) {
+      newErrors.project_name = 'Project name is required';
+    }
+
+    // Message/Inquiry validation
+    const field = formType === 'contact' ? 'message' : 'inquiry';
+    const text = formData[field] || '';
+    const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    
+    if (!text.trim()) {
+      newErrors[field] = formType === 'contact' ? 'Message is required' : 'Inquiry details are required';
     } else if (wordCount < 10) {
-      newErrors.message = 'Message must be at least 10 words';
-    } else if (formData.message.trim().length > 1000) {
-      newErrors.message = 'Message must be less than 1000 characters';
+      newErrors[field] = `Please provide at least 10 words (${wordCount}/10)`;
+    } else if (text.trim().length > 1000) {
+      newErrors[field] = 'Text must be less than 1000 characters';
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // Helper function to handle form submission
+  const submitForm = async (endpoint: string, data: any) => {
+    // Ensure we're using the correct API URL
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const apiUrl = `${baseUrl}/api/${endpoint}`.replace(/([^:]\/)\/+/g, '$1');
+    
+    console.log(`Sending ${formType} request to:`, apiUrl);
+    console.log('Request data:', data);
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      });
+
+      // Handle response
+      let responseData;
+      const contentType = response.headers.get('content-type');
+      
+      try {
+        responseData = await response.json();
+      } catch (e) {
+        const text = await response.text();
+        console.warn('Failed to parse JSON response:', text);
+        responseData = { message: text };
+      }
+
+      console.log('Response status:', response.status, 'Data:', responseData);
+
+      if (!response.ok) {
+        // Handle validation errors (422) differently
+        if (response.status === 422) {
+          const errorDetails = responseData.detail || [];
+          if (Array.isArray(errorDetails)) {
+            // Format validation errors from FastAPI
+            const fieldErrors = errorDetails.reduce((acc: Record<string, string[]>, err: any) => {
+              // Handle different error formats
+              const field = err.loc ? err.loc[1] : err.param || 'form';
+              const message = err.msg || err.message || 'Invalid value';
+              
+              if (!acc[field]) {
+                acc[field] = [];
+              }
+              
+              // Only add unique messages
+              if (!acc[field].includes(message)) {
+                acc[field].push(message);
+              }
+              
+              return acc;
+            }, {});
+            
+            setErrors(fieldErrors);
+            
+            // Create a summary of all errors
+            const errorMessages = Object.values(fieldErrors)
+              .flat()
+              .filter((msg, index, self) => self.indexOf(msg) === index);
+              
+            throw new Error(`Validation failed: ${errorMessages.join('; ')}`);
+          }
+        }
+        
+        // Handle other error responses
+        const errorMessage = responseData.detail || 
+                           responseData.message || 
+                           responseData.error ||
+                           `Server responded with status ${response.status}`;
+                           
+        throw new Error(errorMessage);
+      }
+
+      // Clear form on success
+      const resetData = {
+        project_name: '',
+        name: '',
+        email: '',
+        message: '',
+        inquiry: '',
+        phone: '',
+        occupation: ''
+      };
+      
+      setFormData(resetData);
+      setSelectedCountry({ code: '+250', flag: '🇷🇼', name: 'Rwanda' });
+      
+      // Show success message with details from the server if available
+      const successMessage = responseData.message || 
+        `${formType === 'contact' ? 'Message' : 'Inquiry'} sent successfully!`;
+      
+      setStatus(`✓ ${successMessage}`);
+      
+      // Clear success message and reset form after 5 seconds
+      const timer = setTimeout(() => {
+        setStatus('');
+        setErrors({});
+      }, 5000);
+      
+      // Cleanup timer on component unmount
+      return () => clearTimeout(timer);
+      
+    } catch (error: any) {
+      console.error('Error in submitForm:', error);
+      
+      // Don't show the same error twice
+      const errorMessage = error.message || 'An error occurred while submitting the form';
+      if (!status.includes(errorMessage)) {
+        setStatus(`✗ ${errorMessage}`);
+      }
+      
+      // Re-throw to be caught by the calling function
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
+    // Reset previous status and errors
+    setStatus('');
+    setErrors({});
+    
+    // Validate form
     if (!validateForm()) {
-      setStatus('Please fix the errors above.');
+      setStatus('✗ Please fix the errors above.');
       return;
     }
 
     setStatus('Sending...');
-    setErrors({});
+    setIsSubmitting(true);
+    
+    try {
+      // Prepare the data to send
+      const endpoint = formType === 'contact' ? 'contact' : 'inquiry';
+      const requestData = { ...formData };
+      
+      // Remove empty optional fields for the API
+      if (!requestData.phone?.trim()) delete requestData.phone;
+      if (!requestData.occupation?.trim()) delete requestData.occupation;
+      
+      // For contact form, we don't need project_name and inquiry
+      if (formType === 'contact') {
+        delete requestData.project_name;
+        delete requestData.inquiry;
+      }
+      
+      // For inquiry form, we don't need message
+      if (formType === 'inquiry') {
+        delete requestData.message;
+      }
+      
+      // Submit the form
+      await submitForm(endpoint, requestData);
+      
+    } catch (error) {
+      // Error is already handled in submitForm
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
     setIsSubmitting(true);
 
-    // Log form data for debugging
-    console.log('Form data being sent:', formData);
-
+    // Prepare the request data based on form type
+    const endpoint = formType === 'contact' ? 'contact' : 'inquiry';
+    
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      // For contact form
+      if (formType === 'contact') {
+        const requestData = {
           name: formData.name.trim(),
           email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          message: formData.message.trim()
-        }),
-      });
+          phone: formData.phone.trim() || null, // Make phone optional
+          message: formData.message.trim(),
+          ...(formData.occupation.trim() && { occupation: formData.occupation.trim() })
+        };
+        
+        await submitForm(endpoint, requestData);
+      } 
+      // For inquiry form
+      else {
+        // Create base request data with required fields
+        const requestData: any = {
+          project_name: formData.project_name.trim(),
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          inquiry: formData.inquiry.trim()
+        };
 
-      console.log('Response status:', response.status);
-      const responseText = await response.text();
-      console.log('Response:', responseText);
-
-      if (response.ok) {
-        setStatus('✓ Message sent successfully!');
-        setFormData({ name: '', email: '', message: '', phone: '', occupation: '' });
-        setSelectedCountry({ code: '+250', flag: '🇷🇼', name: 'Rwanda' });
-
-        // Clear success message after 5 seconds
-        setTimeout(() => {
-          setStatus('');
-        }, 5000);
-      } else {
-        try {
-          const errorData = JSON.parse(responseText);
-          setStatus(`✗ ${errorData.detail || 'Please try again.'}`);
-        } catch {
-          setStatus(`✗ Error ${response.status}: Please try again.`);
+        // Add optional fields only if they have values
+        if (formData.phone.trim()) {
+          requestData.phone = formData.phone.trim();
         }
+        if (formData.occupation.trim()) {
+          requestData.occupation = formData.occupation.trim();
+        }
+        
+        console.log('Submitting inquiry with data:', requestData);
+        await submitForm(endpoint, requestData);
       }
     } catch (error) {
-      console.error('Fetch error:', error);
-      setStatus('✗ Network error. Please check your connection and try again.');
-    } finally {
+      console.error('Error in form submission:', error);
+      setStatus('✗ An error occurred while submitting the form. Please try again.');
       setIsSubmitting(false);
     }
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Header/Navigation - Mobile First */}
       <header className="sticky top-0 z-50 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 p-3 sm:p-4">
         <nav className="max-w-6xl mx-auto flex justify-between items-center">
@@ -278,132 +462,184 @@ export default function Contact() {
               <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-pink-400/20 to-indigo-400/20 rounded-full blur-xl animate-pulse delay-500"></div>
 
               <div className="relative z-10">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6 text-center flex items-center justify-center">
-                  <span className="mr-3 text-3xl animate-bounce-subtle">📧</span>
-                  Send a Message
-                </h2>
+                <div className="flex flex-col items-center mb-6">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white mb-4 text-center flex items-center justify-center">
+                    <span className="mr-3 text-3xl animate-bounce-subtle">
+                      {formType === 'contact' ? '📧' : '💡'}
+                    </span>
+                    {formType === 'contact' ? 'Send a Message' : 'Project Inquiry'}
+                  </h2>
+                  <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-700 p-1 rounded-full">
+                    <button
+                      type="button"
+                      onClick={() => setFormType('contact')}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${formType === 'contact' ? 'bg-white dark:bg-slate-800 shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                    >
+                      Contact
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormType('inquiry')}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${formType === 'inquiry' ? 'bg-white dark:bg-slate-800 shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                    >
+                      Project Inquiry
+                    </button>
+                  </div>
+                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                    <div className="animate-fade-in-up delay-200">
-                      <label htmlFor="name" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                        Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                        required
-                      />
-                      {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.name}</p>}
-                    </div>
-
-                    <div className="animate-fade-in-up delay-300">
-                      <label htmlFor="email" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                        required
-                      />
-                      {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.email}</p>}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col md:flex-row gap-3 sm:gap-4 animate-fade-in-up delay-350">
-                    <div className="flex-1">
-                      <label htmlFor="occupation" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                        Occupation
-                      </label>
-                      <select
-                        id="occupation"
-                        value={formData.occupation}
-                        onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
-                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 ${errors.occupation ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg shadow-sm hover:shadow-md`}
-                      >
-                        <option value="">Select Occupation</option>
-                        <option value="investor">Investor</option>
-                        <option value="looking for a job">Looking for a Job</option>
-                        <option value="team member">Team Member</option>
-                        <option value="collaborator">Collaborator</option>
-                        <option value="client">Client</option>
-                        <option value="other">Other</option>
-                      </select>
-                      {errors.occupation && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.occupation}</p>}
-                    </div>
-
-                    <div className="flex-1">
-                      <label htmlFor="phone" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                        Phone Number
-                      </label>
-                      <div className="flex">
-                        <select
-                          value={selectedCountry.code}
-                          onChange={(e) => {
-                            const country = countries.find(c => c.code === e.target.value);
-                            if (country) setSelectedCountry(country);
-                          }}
-                          className="flex-shrink-0 p-3 sm:p-4 border-2 border-r-0 border-slate-300 dark:border-slate-600 rounded-l-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent text-base sm:text-lg transition-all duration-300"
-                        >
-                          {countries.map((country) => (
-                            <option key={country.code} value={country.code}>
-                              {country.flag} {country.code}
-                            </option>
-                          ))}
-                        </select>
+                    {formType === 'inquiry' && (
+                      <div className="animate-fade-in-up">
+                        <label htmlFor="project_name" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                          Project Name *
+                        </label>
                         <input
-                          type="tel"
-                          id="phone"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className={`flex-1 p-3 sm:p-4 border-2 border-l-0 rounded-r-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                          type="text"
+                          id="project_name"
+                          value={formData.project_name}
+                          onChange={(e) => setFormData({ ...formData, project_name: e.target.value })}
+                          className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.project_name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                          required={formType === 'inquiry'}
+                        />
+                        {errors.project_name && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.project_name}</p>}
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                      <div>
+                        <label htmlFor="name" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                          required
+                        />
+                        {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.name}</p>}
+                      </div>
+
+                      <div>
+                        <label htmlFor="email" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                          required
+                        />
+                        {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.email}</p>}
+                      </div>
+
+                      <div>
+                        <label htmlFor="phone" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                          Phone Number
+                        </label>
+                        <div className="flex">
+                          <select
+                            value={selectedCountry.code}
+                            onChange={(e) => {
+                              const country = countries.find(c => c.code === e.target.value) || { code: '+250', flag: '🇷🇼', name: 'Rwanda' };
+                              setSelectedCountry(country);
+                            }}
+                            className="w-24 p-3 border-2 rounded-l-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white border-r-0 focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                          >
+                            {countries.map((country) => (
+                              <option key={country.code} value={country.code}>
+                                {country.flag} {country.code}
+                              </option>
+                            ))}
+                          </select>
+                          <input
+                            type="tel"
+                            id="phone"
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            className={`flex-1 p-3 sm:p-4 border-2 rounded-r-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                            placeholder="e.g. 788123456"
+                          />
+                        </div>
+                        {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.phone}</p>}
+                      </div>
+
+                      <div>
+                        <label htmlFor="occupation" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                          Occupation/Role
+                        </label>
+                        <input
+                          type="text"
+                          id="occupation"
+                          value={formData.occupation}
+                          onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
+                          className="w-full p-3 sm:p-4 border-2 border-slate-300 dark:border-slate-600 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md text-base sm:text-lg"
+                          placeholder="e.g. Software Developer, Designer, etc."
                         />
                       </div>
-                      {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.phone}</p>}
+                    </div>
+
+                    <div>
+                      <label htmlFor={formType === 'contact' ? 'message' : 'inquiry'} className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
+                        {formType === 'contact' ? 'Your Message *' : 'Project Details *'}
+                      </label>
+                      <textarea
+                        id={formType === 'contact' ? 'message' : 'inquiry'}
+                        value={formType === 'contact' ? formData.message : formData.inquiry}
+                        onChange={(e) => {
+                          if (formType === 'contact') {
+                            setFormData({ ...formData, message: e.target.value });
+                          } else {
+                            setFormData({ ...formData, inquiry: e.target.value });
+                          }
+                        }}
+                        rows={6}
+                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors[formType === 'contact' ? 'message' : 'inquiry'] ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
+                        placeholder={formType === 'contact' ? 'How can I help you?' : 'Tell me about your project...'}
+                        required
+                      ></textarea>
+                      {errors[formType === 'contact' ? 'message' : 'inquiry'] && (
+                        <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">
+                          {errors[formType === 'contact' ? 'message' : 'inquiry']}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`w-full py-3 sm:py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-2 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <span>{formType === 'contact' ? 'Send Message' : 'Send Inquiry'}</span>
+                            <svg className="w-5 h-5 text-white transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </>
+                        )}
+                      </button>
+                      {status && (
+                        <p className={`mt-3 text-center text-sm font-medium ${status.startsWith('✓') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                          {status}
+                        </p>
+                      )}
                     </div>
                   </div>
-
-                  <div className="animate-fade-in-up delay-500">
-                    <label htmlFor="message" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.message ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                      rows={6}
-                      required
-                    />
-                    {errors.message && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.message}</p>}
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                      {formData.message.trim().split(/\s+/).filter(word => word.length > 0).length}/10 words minimum
-                    </p>
-                  </div>
-
-                  <div className="flex justify-center animate-fade-in-up delay-600">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl transition-all duration-500 font-bold text-lg sm:text-xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 hover:-translate-y-1 min-h-[56px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                      <span className="relative z-10 mr-2 text-xl animate-bounce-subtle">
-                        {isSubmitting ? '⏳' : '🚀'}
-                      </span>
-                      <span className="relative z-10">
-                        {isSubmitting ? 'Sending...' : 'Send Message'}
-                      </span>
-                    </button>
-                  </div>
                 </form>
-                {status && <p className={`mt-4 text-center font-medium text-base sm:text-lg ${status.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{status}</p>}
               </div>
             </div>
           </div>
@@ -451,6 +687,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

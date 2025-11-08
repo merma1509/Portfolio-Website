@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { countries } from '@/lib/countries';
 
 export default function Projects() {
-  const [inquiryData, setInquiryData] = useState({ project_name: '', email: '', inquiry: '', phone: '', occupation: '', country: { code: '+7', flag: '🇷🇺', name: 'Russia' }});
+  const [inquiryData, setInquiryData] = useState({ project_name: '', email: '', inquiry: '', phone: '', occupation: '', country: { code: '+250', flag: '🇷🇼', name: 'Rwanda' }});
   const [isSubmittingInquiry, setIsSubmittingInquiry] = useState(false);
   const [inquiryErrors, setInquiryErrors] = useState<{[key: string]: string}>({});
   const [theme, setTheme] = useState('light');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [selectedInquiryCountry, setSelectedInquiryCountry] = useState({ code: '+7', flag: '🇷🇺', name: 'Russia' });
+  const [selectedInquiryCountry, setSelectedInquiryCountry] = useState({ code: '+250', flag: '🇷🇼', name: 'Rwanda' });
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -54,9 +54,9 @@ export default function Projects() {
     }
 
     // Phone validation - allow international formats
-    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,15}$/;
+    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{9,12}$/;
     if (inquiryData.phone.trim() && !phoneRegex.test(inquiryData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid phone number (10-15 digits)';
+      newErrors.phone = 'Please enter a valid phone number (9-12 digits)';
     }
 
     // Occupation validation
@@ -116,7 +116,7 @@ export default function Projects() {
       slogan: "Stay informed, Stay Safe: Leveraging technologies to save more lives and infrastructure.",
       description: "An AI-powered platform for disaster management and climate resilience. It integrates real-time data from sensors and satellite imagery, predictive analytics using machine learning, and community alerts to provide early warnings and resource allocation for businesses, governments, NGOs, and communities.",
       tech: ["AI/ML", "IoT Sensors", "GIS Mapping", "FastAPI", "Cloud Computing", "Satellite Imagery"],
-      outcomes: "Reduced disaster response times by 40%, protected over 10,000 infrastructure units, and enhanced community resilience in vulnerable regions.",
+      outcomes: "Reducing disaster response times by 40%, protecting over 10,000 infrastructure units, and enhancing community resilience in vulnerable regions.",
       icon: "🌍",
       color: "from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30",
       border: "border-green-200 dark:border-green-700",
@@ -128,7 +128,7 @@ export default function Projects() {
       slogan: "Smarter Routes. Safest and Fastest Journeys. Greener Cities. Powered By Intelligence.",
       description: "A traffic intelligence and route optimization app that uses IoT data from roads, vehicles and drones, combined with ML algorithms, to optimize routes in real-time. It predicts congestion, suggests eco-friendly paths, and integrates with navigation systems for safer, faster commutes in African cities.",
       tech: ["IoT Devices", "React Native", "FastAPI", "PostgreSQL", "Network and communication", "AI/ML", "Cybersecurity"],
-      outcomes: "Decreased average commute times by 25%, reduced carbon emissions by 15%, helped people live in the cities with less traffic, and improved road safety with predictive alerts.",
+      outcomes: "Decreasing average commute times by 25%, reducing carbon emissions by 15%, helping people live in the cities with less traffic, and improving road safety with predictive alerts.",
       icon: "🚗",
       color: "from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30",
       border: "border-blue-200 dark:border-blue-700",
@@ -140,7 +140,7 @@ export default function Projects() {
       slogan: "Seamless Shopping, Smart Recommendations.",
       description: "An integrated e-commerce platform with AI-driven recommendations, secure payment gateways, and efficient logistics. It connects local vendors with customers, using data analytics to personalize experiences and optimize supply chains for faster deliveries.",
       tech: ["Flutter", "FastAPI", "PostgreSQL", "AI Algorithms", "Cross-Platform", "Cybersecurity", "Python"],
-      outcomes: "Increased vendor sales by 30%, improved customer satisfaction scores by 50%, and streamlined operations for 500+ users.",
+      outcomes: "Increasing vendor sales by 30%, improving customer satisfaction scores by 50%, and streamlining operations for 500+ users.",
       icon: "🛒",
       color: "from-teal-50 to-teal-100 dark:from-teal-900/30 dark:to-teal-800/30",
       border: "border-teal-200 dark:border-teal-700",
@@ -152,7 +152,7 @@ export default function Projects() {
       slogan: "Hardware Meets Software for Autonomous Innovation.",
       description: "A long-term initiative to develop autonomous drones for delivery, disaster response, traffic intelligence, and environmental monitoring. Integrating hardware design with software for navigation, cybersecurity for secure operations, and AI for intelligent decision-making in logistics and agriculture.",
       tech: ["Autonomous Systems", "Cybersecurity", "Python", "Embedded C++", "Hardware-Software"],
-      outcomes: "Prototyped 1 UAV model, achieved 45% accuracy in test flights, and preparing for real-world applications in disaster response.",
+      outcomes: "Prototyping 1 UAV model, achieving 45% accuracy in test flights, and preparing for real-world applications in disaster response.",
       icon: "🚁",
       color: "from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/30",
       border: "border-indigo-200 dark:border-indigo-700",
@@ -310,8 +310,9 @@ export default function Projects() {
                       <option value="">Select Project</option>
                       <option value="OpenClimate">OpenClimate</option>
                       <option value="RoutiQ">RoutiQ</option>
-                      <option value="eNeza Marketplace">eNeza Marketplace</option>
+                      <option value="eNeza MarketPlace">eNeza MarketPlace</option>
                       <option value="Drone and UAVs">Drone and UAVs</option>
+                      <option value="Others">Others</option>
                     </select>
                     {inquiryErrors.project_name && <p className="mt-2 text-sm text-red-600 dark:text-red-400 animate-shake">{inquiryErrors.project_name}</p>}
                   </div>
@@ -357,7 +358,7 @@ export default function Projects() {
                         value={inquiryData.phone}
                         onChange={(e) => setInquiryData({ ...inquiryData, phone: e.target.value })}
                         className={`flex-1 p-4 sm:p-5 border-2 border-l-0 rounded-r-xl bg-slate-50/80 dark:bg-slate-700/80 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 ${inquiryErrors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-sm sm:text-base shadow-sm hover:shadow-md`}
-                        placeholder="123 456 7890"
+                        placeholder="700 000 000"
                       />
                     </div>
                     {inquiryErrors.phone && <p className="mt-2 text-sm text-red-600 dark:text-red-400 animate-shake">{inquiryErrors.phone}</p>}

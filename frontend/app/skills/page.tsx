@@ -42,8 +42,8 @@ export default function Skills() {
       textColor: "text-green-800 dark:text-green-200",
       buttonColor: "bg-green-600 hover:bg-green-700",
       items: [
-        { name: "Advanced Predictive Analytics", highlight: true },
-        { name: "Deep Learning Architecture Design", highlight: true },
+        { name: "Predictive Analytics and Deep Learning", highlight: true },
+        { name: "Neural Networks Architecture Design", highlight: true },
         { name: "Production ML Pipeline Development", highlight: true }
       ]
     },
@@ -84,8 +84,8 @@ export default function Skills() {
       textColor: "text-slate-800 dark:text-slate-200",
       buttonColor: "bg-slate-600 hover:bg-slate-700",
       items: [
-        { name: "Autonomous UAV Navigation Systems", highlight: true },
-        { name: "Satellite Communication Protocols", highlight: true },
+        { name: "Autonomous UAVs Systems", highlight: true },
+        { name: "Communication Protocols", highlight: true },
         { name: "Hardware-Software Integration", highlight: true }
       ]
     },

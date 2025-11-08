@@ -125,7 +125,7 @@ export default function Home() {
               <span className="sm:hidden"> </span>SpaceTech Enthusiast
             </h2>
             <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 md:mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              <i>Bridging AI, IoT, and real-world impact. Expert in autonomous systems, drones-UAVs, and SpaceTech solutions.</i>
+              <i>Bridging AI, Internet of Things (IoT), autonomous systems, and real-world impact.</i>
             </p>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start">
               <a
@@ -226,7 +226,7 @@ export default function Home() {
                 <span className="text-slate-200 font-medium">Get the latest updates</span> on my projects and insights in
                 <span className="text-blue-300 font-semibold"> AI</span>,
                 <span className="text-purple-300 font-semibold"> IoT</span>, and
-                <span className="text-pink-300 font-semibold"> SpaceTech</span>
+                <span className="text-pink-300 font-semibold"> Autonomous Systems</span>
               </p>
 
               <form onSubmit={handleNewsletterSubmit} className="flex flex-col space-y-6 sm:space-y-0 sm:flex-row justify-center items-center max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto bg-gradient-to-r from-slate-700/60 to-slate-600/60 p-4 sm:p-5 md:p-6 rounded-2xl backdrop-blur-md border border-slate-500/20 shadow-2xl">

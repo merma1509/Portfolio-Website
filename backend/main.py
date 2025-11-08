@@ -3,31 +3,31 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 
 # Import routers
-from routes.contact import router as contact_router
-from routes.newsletter import router as newsletter_router
-from routes.inquiry import router as inquiry_router
-from routes.feedback import router as feedback_router
-from routes.user import router as user_router
-from routes.blog import router as blog_router
+from routes import contact
+from routes import newsletter
+from routes import inquiry
+from routes import feedback
+from routes import user
+from routes import blog
 
 app = FastAPI(title="Portfolio Backend API")
 
-# CORS for frontend
+# CORS for frontend - allow all origins in development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=["*"],  # Allow all origins for development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Include routers
-app.include_router(contact_router, prefix="/api", tags=["contact"])
-app.include_router(newsletter_router, prefix="/api", tags=["newsletter"])
-app.include_router(inquiry_router, prefix="/api", tags=["inquiry"])
-app.include_router(feedback_router, prefix="/api", tags=["feedback"])
-app.include_router(user_router, prefix="/api", tags=["user"])
-app.include_router(blog_router, prefix="/api", tags=["blog"])
+app.include_router(contact.router, prefix="/api", tags=["contact"])
+app.include_router(newsletter.router, prefix="/api", tags=["newsletter"])
+app.include_router(inquiry.router, prefix="/api", tags=["inquiry"])
+app.include_router(feedback.router, prefix="/api", tags=["feedback"])
+app.include_router(user.router, prefix="/api", tags=["user"])
+app.include_router(blog.router, prefix="/api", tags=["blog"])
 
 @app.get("/")
 async def root():
