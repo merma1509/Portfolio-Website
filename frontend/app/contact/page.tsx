@@ -81,18 +81,18 @@ export default function Contact() {
 
     // Phone validation - allow international formats
     const phoneRegex = /^[\+]?[0-9\s\-\(\)]{9,12}$/;
-    if (formData.phone.trim() && !phoneRegex.test(formData.phone.trim())) {
+    if (formData.phone && formData.phone.trim() && !phoneRegex.test(formData.phone.trim())) {
       newErrors.phone = 'Please enter a valid phone number (9-12 digits)';
     }
 
     // Project Name validation (for inquiry form)
-    if (formType === 'inquiry' && !formData.project_name.trim()) {
+    if (formType === 'inquiry' && formData.project_name && !formData.project_name.trim()) {
       newErrors.project_name = 'Project name is required';
     }
 
     // Message/Inquiry validation
     const field = formType === 'contact' ? 'message' : 'inquiry';
-    const text = formData[field] || '';
+    const text = (field in formData ? formData[field as keyof FormData] : '') as string || '';
     const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
     
     if (!text.trim()) {
@@ -244,76 +244,45 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Prepare the data to send
+      // Prepare the data to send based on form type
       const endpoint = formType === 'contact' ? 'contact' : 'inquiry';
-      const requestData = { ...formData };
-      
-      // Remove empty optional fields for the API
-      if (!requestData.phone?.trim()) delete requestData.phone;
-      if (!requestData.occupation?.trim()) delete requestData.occupation;
-      
-      // For contact form, we don't need project_name and inquiry
+      let requestData: Record<string, string> = {};
+
       if (formType === 'contact') {
-        delete requestData.project_name;
-        delete requestData.inquiry;
+        requestData = {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message?.trim() || '',
+          ...(formData.phone?.trim() && { phone: formData.phone.trim() }),
+          ...(formData.occupation?.trim() && { occupation: formData.occupation.trim() })
+        };
+      } else {
+        requestData = {
+          project_name: formData.project_name?.trim() || '',
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          inquiry: formData.inquiry?.trim() || '',
+          ...(formData.phone?.trim() && { phone: formData.phone.trim() }),
+          ...(formData.occupation?.trim() && { occupation: formData.occupation.trim() })
+        };
       }
-      
-      // For inquiry form, we don't need message
-      if (formType === 'inquiry') {
-        delete requestData.message;
-      }
-      
+
+      // Remove any empty strings
+      Object.keys(requestData).forEach(key => {
+        if (requestData[key] === '') {
+          delete requestData[key];
+        }
+      });
+
       // Submit the form
       await submitForm(endpoint, requestData);
       
     } catch (error) {
-      // Error is already handled in submitForm
       console.error('Form submission error:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-    setIsSubmitting(true);
-
-    // Prepare the request data based on form type
-    const endpoint = formType === 'contact' ? 'contact' : 'inquiry';
-    
-    try {
-      // For contact form
-      if (formType === 'contact') {
-        const requestData = {
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim() || null, // Make phone optional
-          message: formData.message.trim(),
-          ...(formData.occupation.trim() && { occupation: formData.occupation.trim() })
-        };
-        
-        await submitForm(endpoint, requestData);
-      } 
-      // For inquiry form
-      else {
-        // Create base request data with required fields
-        const requestData: any = {
-          project_name: formData.project_name.trim(),
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          inquiry: formData.inquiry.trim()
-        };
-
-        // Add optional fields only if they have values
-        if (formData.phone.trim()) {
-          requestData.phone = formData.phone.trim();
-        }
-        if (formData.occupation.trim()) {
-          requestData.occupation = formData.occupation.trim();
-        }
-        
-        console.log('Submitting inquiry with data:', requestData);
-        await submitForm(endpoint, requestData);
+      if (!status) {
+        setStatus('✗ An error occurred. Please try again.');
       }
-    } catch (error) {
-      console.error('Error in form submission:', error);
-      setStatus('✗ An error occurred while submitting the form. Please try again.');
+    } finally {
       setIsSubmitting(false);
     }
   };
