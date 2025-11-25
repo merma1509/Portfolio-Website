@@ -166,8 +166,8 @@ export default function Home() {
                 <h4 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold text-slate-800 dark:text-white">OpenClimate</h4>
               </div>
               <p className="text-teal-700 dark:text-teal-300 font-medium mb-2 italic text-xs sm:text-xs md:text-sm text-center">"Stay informed, Stay Safe: Leveraging technologies to save more lives and infrastructure."</p>
-              <p className="text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 md:mb-6 text-xs sm:text-sm md:text-base text-justify">Disaster management and climate resilience platform , integrating real-time data and predictive analytics.</p>
-              <a href="/projects" className="inline-block bg-green-600 text-white px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 rounded-lg hover:bg-green-700 transition-all duration-200 font-medium text-xs sm:text-sm md:text-base min-h-[36px] sm:min-h-[40px] flex items-center justify-center">Learn More</a>
+              <p className="text-slate-600 dark:text-slate-300 mb-3 sm:mb-4 md:mb-6 text-xs sm:text-sm md:text-base text-justify">Disaster management and climate resilience platform, integrating real-time data and predictive analytics.</p>
+              <a href="https://theopenclimate.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-green-600 text-white px-2 sm:px-3 md:px-4 lg:px-6 py-1.5 sm:py-2 md:py-3 rounded-lg hover:bg-green-700 transition-all duration-200 font-medium text-xs sm:text-sm md:text-base min-h-[36px] sm:min-h-[40px] flex items-center justify-center">Learn More</a>
             </div>
 
             {/* RoutiQ */}

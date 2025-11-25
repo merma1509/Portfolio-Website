@@ -4,11 +4,9 @@ import { useState, useEffect } from 'react';
 import { countries } from '@/lib/countries';
 
 interface FormData {
-  project_name?: string;
   name: string;
   email: string;
-  message?: string;
-  inquiry?: string;
+  message: string;
   phone?: string;
   occupation?: string;
 }
@@ -18,13 +16,10 @@ interface FormErrors {
 }
 
 export default function Contact() {
-  const [formType, setFormType] = useState<'contact' | 'inquiry'>('contact');
   const [formData, setFormData] = useState<FormData>({
-    project_name: '',
     name: '',
     email: '',
     message: '',
-    inquiry: '',
     phone: '',
     occupation: ''
   });
@@ -85,22 +80,15 @@ export default function Contact() {
       newErrors.phone = 'Please enter a valid phone number (9-12 digits)';
     }
 
-    // Project Name validation (for inquiry form)
-    if (formType === 'inquiry' && formData.project_name && !formData.project_name.trim()) {
-      newErrors.project_name = 'Project name is required';
-    }
-
-    // Message/Inquiry validation
-    const field = formType === 'contact' ? 'message' : 'inquiry';
-    const text = (field in formData ? formData[field as keyof FormData] : '') as string || '';
-    const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    // Message validation
+    const wordCount = formData.message.trim().split(/\s+/).filter(word => word.length > 0).length;
     
-    if (!text.trim()) {
-      newErrors[field] = formType === 'contact' ? 'Message is required' : 'Inquiry details are required';
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
     } else if (wordCount < 10) {
-      newErrors[field] = `Please provide at least 10 words (${wordCount}/10)`;
-    } else if (text.trim().length > 1000) {
-      newErrors[field] = 'Text must be less than 1000 characters';
+      newErrors.message = `Please provide at least 10 words (${wordCount}/10)`;
+    } else if (formData.message.trim().length > 1000) {
+      newErrors.message = 'Message must be less than 1000 characters';
     }
 
     setErrors(newErrors);
@@ -108,12 +96,12 @@ export default function Contact() {
   };
 
   // Helper function to handle form submission
-  const submitForm = async (endpoint: string, data: any) => {
+  const submitForm = async (endpoint: string, data: Record<string, string>) => {
     // Ensure we're using the correct API URL
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const apiUrl = `${baseUrl}/api/${endpoint}`.replace(/([^:]\/)\/+/g, '$1');
     
-    console.log(`Sending ${formType} request to:`, apiUrl);
+    console.log(`Sending contact form request to:`, apiUrl);
     console.log('Request data:', data);
 
     try {
@@ -185,22 +173,17 @@ export default function Contact() {
       }
 
       // Clear form on success
-      const resetData = {
-        project_name: '',
+      setFormData({
         name: '',
         email: '',
         message: '',
-        inquiry: '',
         phone: '',
         occupation: ''
-      };
-      
-      setFormData(resetData);
+      });
       setSelectedCountry({ code: '+250', flag: '🇷🇼', name: 'Rwanda' });
       
       // Show success message with details from the server if available
-      const successMessage = responseData.message || 
-        `${formType === 'contact' ? 'Message' : 'Inquiry'} sent successfully!`;
+      const successMessage = responseData.message || 'Message sent successfully!';
       
       setStatus(`✓ ${successMessage}`);
       
@@ -244,38 +227,24 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Prepare the data to send based on form type
-      const endpoint = formType === 'contact' ? 'contact' : 'inquiry';
-      let requestData: Record<string, string> = {};
-
-      if (formType === 'contact') {
-        requestData = {
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message?.trim() || '',
-          ...(formData.phone?.trim() && { phone: formData.phone.trim() }),
-          ...(formData.occupation?.trim() && { occupation: formData.occupation.trim() })
-        };
-      } else {
-        requestData = {
-          project_name: formData.project_name?.trim() || '',
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          inquiry: formData.inquiry?.trim() || '',
-          ...(formData.phone?.trim() && { phone: formData.phone.trim() }),
-          ...(formData.occupation?.trim() && { occupation: formData.occupation.trim() })
-        };
-      }
+      // Prepare the data to send
+      const requestData = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim(),
+        ...(formData.phone?.trim() && { phone: formData.phone.trim() }),
+        ...(formData.occupation?.trim() && { occupation: formData.occupation.trim() })
+      };
 
       // Remove any empty strings
-      Object.keys(requestData).forEach(key => {
+      (Object.keys(requestData) as Array<keyof typeof requestData>).forEach(key => {
         if (requestData[key] === '') {
           delete requestData[key];
         }
       });
 
       // Submit the form
-      await submitForm(endpoint, requestData);
+      await submitForm('contact', requestData);
       
     } catch (error) {
       console.error('Form submission error:', error);
@@ -434,179 +403,138 @@ export default function Contact() {
                 <div className="flex flex-col items-center mb-6">
                   <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white mb-4 text-center flex items-center justify-center">
                     <span className="mr-3 text-3xl animate-bounce-subtle">
-                      {formType === 'contact' ? '📧' : '💡'}
+                      📧
                     </span>
-                    {formType === 'contact' ? 'Send a Message' : 'Project Inquiry'}
+                    Send a Message
                   </h2>
-                  <div className="flex items-center space-x-2 bg-slate-100 dark:bg-slate-700 p-1 rounded-full">
-                    <button
-                      type="button"
-                      onClick={() => setFormType('contact')}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${formType === 'contact' ? 'bg-white dark:bg-slate-800 shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
-                    >
-                      Contact
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormType('inquiry')}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${formType === 'inquiry' ? 'bg-white dark:bg-slate-800 shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
-                    >
-                      Project Inquiry
-                    </button>
-                  </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                    {formType === 'inquiry' && (
-                      <div className="animate-fade-in-up">
-                        <label htmlFor="project_name" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                          Project Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="project_name"
-                          value={formData.project_name}
-                          onChange={(e) => setFormData({ ...formData, project_name: e.target.value })}
-                          className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.project_name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                          required={formType === 'inquiry'}
-                        />
-                        {errors.project_name && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.project_name}</p>}
-                      </div>
-                    )}
-
-                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                      <div>
-                        <label htmlFor="name" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                          Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                          required
-                        />
-                        {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.name}</p>}
-                      </div>
-
-                      <div>
-                        <label htmlFor="email" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                          required
-                        />
-                        {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.email}</p>}
-                      </div>
-
-                      <div>
-                        <label htmlFor="phone" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                          Phone Number
-                        </label>
-                        <div className="flex">
-                          <select
-                            value={selectedCountry.code}
-                            onChange={(e) => {
-                              const country = countries.find(c => c.code === e.target.value) || { code: '+250', flag: '🇷🇼', name: 'Rwanda' };
-                              setSelectedCountry(country);
-                            }}
-                            className="w-24 p-3 border-2 rounded-l-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-white border-r-0 focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                          >
-                            {countries.map((country) => (
-                              <option key={country.code} value={country.code}>
-                                {country.flag} {country.code}
-                              </option>
-                            ))}
-                          </select>
-                          <input
-                            type="tel"
-                            id="phone"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            className={`flex-1 p-3 sm:p-4 border-2 rounded-r-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                            placeholder="e.g. 788123456"
-                          />
-                        </div>
-                        {errors.phone && <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">{errors.phone}</p>}
-                      </div>
-
-                      <div>
-                        <label htmlFor="occupation" className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                          Occupation/Role
-                        </label>
-                        <input
-                          type="text"
-                          id="occupation"
-                          value={formData.occupation}
-                          onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
-                          className="w-full p-3 sm:p-4 border-2 border-slate-300 dark:border-slate-600 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md text-base sm:text-lg"
-                          placeholder="e.g. Software Developer, Designer, etc."
-                        />
-                      </div>
+                <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
+                  {/* Name and Email in a row on larger screens */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className={`w-full px-4 py-3 rounded-lg border-2 ${
+                          errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'
+                        } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                        placeholder="John Doe"
+                      />
+                      {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                     </div>
 
                     <div>
-                      <label htmlFor={formType === 'contact' ? 'message' : 'inquiry'} className="block text-slate-700 dark:text-slate-300 mb-2 font-semibold text-base sm:text-lg">
-                        {formType === 'contact' ? 'Your Message *' : 'Project Details *'}
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                        Email <span className="text-red-500">*</span>
                       </label>
-                      <textarea
-                        id={formType === 'contact' ? 'message' : 'inquiry'}
-                        value={formType === 'contact' ? formData.message : formData.inquiry}
-                        onChange={(e) => {
-                          if (formType === 'contact') {
-                            setFormData({ ...formData, message: e.target.value });
-                          } else {
-                            setFormData({ ...formData, inquiry: e.target.value });
-                          }
-                        }}
-                        rows={6}
-                        className={`w-full p-3 sm:p-4 border-2 rounded-xl bg-slate-50/90 dark:bg-slate-700/90 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 hover:bg-slate-100 dark:hover:bg-slate-600 shadow-sm hover:shadow-md ${errors[formType === 'contact' ? 'message' : 'inquiry'] ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'} text-base sm:text-lg`}
-                        placeholder={formType === 'contact' ? 'How can I help you?' : 'Tell me about your project...'}
-                        required
-                      ></textarea>
-                      {errors[formType === 'contact' ? 'message' : 'inquiry'] && (
-                        <p className="mt-1 text-sm text-red-600 dark:text-red-400 animate-shake">
-                          {errors[formType === 'contact' ? 'message' : 'inquiry']}
-                        </p>
-                      )}
+                      <input
+                        type="email"
+                        id="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className={`w-full px-4 py-3 rounded-lg border-2 ${
+                          errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'
+                        } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                        placeholder="john@example.com"
+                      />
+                      {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+                    </div>
+                  </div>
+
+                  {/* Phone and Occupation in a row on larger screens */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                        Phone Number
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="tel"
+                          id="phone"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          className={`w-full px-4 py-3 rounded-lg border-2 ${
+                            errors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'
+                          } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                          placeholder="+250 78 123 4567"
+                        />
+                      </div>
+                      {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
                     </div>
 
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`w-full py-3 sm:py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-2 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Sending...
-                          </>
-                        ) : (
-                          <>
-                            <span>{formType === 'contact' ? 'Send Message' : 'Send Inquiry'}</span>
-                            <svg className="w-5 h-5 text-white transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </>
-                        )}
-                      </button>
-                      {status && (
-                        <p className={`mt-3 text-center text-sm font-medium ${status.startsWith('✓') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                          {status}
-                        </p>
-                      )}
+                    <div>
+                      <label htmlFor="occupation" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                        Occupation/Role
+                      </label>
+                      <input
+                        type="text"
+                        id="occupation"
+                        value={formData.occupation}
+                        onChange={(e) => setFormData({...formData, occupation: e.target.value})}
+                        className="w-full px-4 py-3 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="E.g., Software Developer"
+                      />
                     </div>
+                  </div>
+
+                  {/* Message field - full width */}
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Your Message <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      rows={5}
+                      className={`w-full px-4 py-3 rounded-lg border-2 ${
+                        errors.message ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'
+                      } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none`}
+                      placeholder="Type your message here... (minimum 10 words)"
+                    ></textarea>
+                    {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
+                  </div>
+
+                  {/* Submit button */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={`w-full py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold text-lg rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-2 ${
+                        isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <span>Send Message</span>
+                          <svg className="w-5 h-5 text-white transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </>
+                      )}
+                    </button>
+                    {status && (
+                      <p className={`mt-3 text-center text-sm font-medium ${
+                        status.startsWith('✓') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                      }`}>
+                        {status}
+                      </p>
+                    )}
                   </div>
                 </form>
               </div>
@@ -614,7 +542,7 @@ export default function Contact() {
           </div>
 
           {/* Social Links Section */}
-          <div className="text-center animate-fade-in-up delay-800">
+          <div className="text-center animate-fade-in-up delay-800 mt-12">
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Connect With Me

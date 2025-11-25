@@ -121,7 +121,7 @@ export default function Projects() {
       color: "from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30",
       border: "border-green-200 dark:border-green-700",
       button: "bg-green-600 hover:bg-green-700",
-      link: "#"
+      onClick: () => window.open("https://theopenclimate.com/", "_blank")
     },
     {
       name: "RoutiQ",
@@ -133,7 +133,8 @@ export default function Projects() {
       color: "from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30",
       border: "border-blue-200 dark:border-blue-700",
       button: "bg-blue-600 hover:bg-blue-700",
-      link: "#"
+      link: "#",
+      onClick: () => window.open("https://routiq.com/", "_blank") 
     },
     {
       name: "eNeza MarketPlace",
@@ -244,7 +245,11 @@ export default function Projects() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 animate-fade-in-up delay-400">
             {projects.map((project, index) => (
-              <div key={index} className={`group bg-gradient-to-br ${project.color} p-6 sm:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border ${project.border} hover:scale-105 relative overflow-hidden`}>
+              <div 
+                key={index} 
+                className={`group bg-gradient-to-br ${project.color} p-6 sm:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border ${project.border} hover:scale-105 relative overflow-hidden cursor-pointer`}
+                onClick={() => project.onClick ? project.onClick() : window.open(project.link, project.target || '_self')}
+              >
                 {/* Decorative elements */}
                 <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-lg animate-pulse"></div>
 
