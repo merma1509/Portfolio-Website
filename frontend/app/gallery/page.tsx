@@ -33,18 +33,20 @@ export default function Gallery() {
 
   const galleryItems = [
     {
-      title: "OpenClimate Dashboard",
-      description: "Interactive dashboard for real-time disaster monitoring and alerts.",
+      title: "OpenClimate Platform",
+      description: "AI-powered platform for disaster management and climate resilience with real-time monitoring and predictive analytics.",
       type: "image",
-      src: "/images/openclimate-dashboard.jpg",
-      alt: "OpenClimate AI dashboard for disaster management",
-      icon: "🌍"
+      src: "/openclimate.png",
+      alt: "OpenClimate AI platform for disaster management",
+      icon: "🌍",
+      link: "https://theopenclimate.com/",
+      target: "_blank"
     },
     {
       title: "RoutiQ App Interface",
       description: "User interface for route optimization and traffic predictions.",
       type: "image",
-      src: "/images/routiq-interface.jpg",
+      src: "routiq.png",
       alt: "RoutiQ traffic optimization app",
       icon: "🚗"
     },
@@ -168,29 +170,52 @@ export default function Gallery() {
 
                 {/* Image Container */}
                 <div className="relative w-full h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-lg mb-3 sm:mb-4 lg:mb-6 overflow-hidden group-hover:shadow-lg transition-shadow duration-300">
-                  {/* Placeholder Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white text-2xl sm:text-3xl lg:text-4xl animate-bounce-subtle">{item.icon}</span>
+                  {item.title === "OpenClimate Platform" || item.title === "RoutiQ App Interface" ? (
+                    // For OpenClimate and RoutiQ - Show only the image
+                    <div className="relative w-full h-full">
+                      <img 
+                        src={item.src} 
+                        alt={item.alt} 
+                        className="absolute inset-0 w-full h-full object-cover"
+                        onError={(e) => e.currentTarget.style.display = 'none'}
+                      />
                     </div>
-                  </div>
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-2">
-                        <svg className="w-6 h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                        </svg>
+                  ) : (
+                    // For all other projects - Show only the icon with decoration
+                    <div className="relative w-full h-full">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 bg-gradient-to-br from-blue-500/90 to-purple-500/90 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
+                          <span className="text-white text-4xl sm:text-5xl lg:text-6xl animate-bounce-subtle">{item.icon}</span>
+                        </div>
                       </div>
-                      <p className="text-white text-sm sm:text-base font-medium">View Project</p>
+                      {/* Image Preview Badge */}
+                      <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        View Details
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Image Placeholder Text */}
-                  <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    Image Preview
-                  </div>
+                  {/* Hover Overlay - Only for image items */}
+                  {(item.title === "OpenClimate Platform" || item.title === "RoutiQ App Interface") && (
+                    <a 
+                      href={item.link || '#'} 
+                      target={item.target || '_self'}
+                      rel={item.target ? 'noopener noreferrer' : ''}
+                      className="absolute inset-0 z-20 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center cursor-pointer"
+                      onClick={(e) => {
+                        if (!item.link) e.preventDefault();
+                      }}
+                    >
+                      <div className="text-center p-4">
+                        <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-2">
+                          <svg className="w-6 h-6 text-white animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                          </svg>
+                        </div>
+                        <p className="text-white text-sm sm:text-base font-medium">View Project</p>
+                      </div>
+                    </a>
+                  )}
                 </div>
 
                 {/* Content */}
@@ -204,10 +229,12 @@ export default function Gallery() {
 
                   {/* Action Button */}
                   <a
-                    href={`/projects#${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    href={item.link || `/projects#${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    target={item.target || '_self'}
+                    rel={item.target ? 'noopener noreferrer' : ''}
                     className="inline-block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 text-center"
                   >
-                    View Details
+                    {item.link ? 'Visit Website' : 'View Details'}
                   </a>
                 </div>
               </div>

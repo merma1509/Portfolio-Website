@@ -462,7 +462,7 @@ export default function Contact() {
                           className={`w-full px-4 py-3 rounded-lg border-2 ${
                             errors.phone ? 'border-red-500' : 'border-slate-300 dark:border-slate-600'
                           } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
-                          placeholder="+250 78 123 4567"
+                          placeholder="+250 70 000 000"
                         />
                       </div>
                       {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}

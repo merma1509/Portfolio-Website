@@ -248,7 +248,7 @@ export default function Projects() {
               <div 
                 key={index} 
                 className={`group bg-gradient-to-br ${project.color} p-6 sm:p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border ${project.border} hover:scale-105 relative overflow-hidden cursor-pointer`}
-                onClick={() => project.onClick ? project.onClick() : window.open(project.link, project.target || '_self')}
+                onClick={() => project.onClick ? project.onClick() : window.open(project.link || '#', '_blank')}
               >
                 {/* Decorative elements */}
                 <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-white/20 to-transparent rounded-full blur-lg animate-pulse"></div>
