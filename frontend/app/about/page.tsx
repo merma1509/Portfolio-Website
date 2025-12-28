@@ -96,7 +96,7 @@ export default function About() {
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-200/50 dark:border-slate-700/50 p-3 sm:p-4 shadow-sm">
         <nav className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-            <a href="/" className="hover:opacity-80 transition-opacity">Portfolio</a>
+            <a href="/" className="hover:opacity-80 transition-opacity">~M</a>
           </h1>
 
           {/* Desktop Navigation */}

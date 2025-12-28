@@ -341,57 +341,6 @@ export default function Contact() {
             </p>
           </div>
 
-          {/* Contact Methods Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-200">
-            <div className="group bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-blue-200/50 dark:border-blue-700/30 hover:scale-105 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-lg animate-pulse"></div>
-              <div className="relative z-10 text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white mb-1 sm:mb-2">Email</h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-3">niyonmartin@yandex.ru</p>
-                <a href="mailto:niyonmartin@yandex.ru" className="inline-block bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105">
-                  Send Email
-                </a>
-              </div>
-            </div>
-
-            <div className="group bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-green-200/50 dark:border-green-700/30 hover:scale-105 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-green-400/20 to-transparent rounded-full blur-lg animate-pulse delay-500"></div>
-              <div className="relative z-10 text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white mb-1 sm:mb-2">Phone</h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-3">Available for calls</p>
-                <a href="tel:+250788123456" className="inline-block bg-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-green-700 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105">
-                  Call Now
-                </a>
-              </div>
-            </div>
-
-            <div className="group bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 sm:p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-blue-200/50 dark:border-blue-700/30 hover:scale-105 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-lg animate-pulse delay-1000"></div>
-              <div className="relative z-10 text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-bounce-subtle" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-white mb-1 sm:mb-2">LinkedIn</h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-2 sm:mb-3">Professional networking</p>
-                <a href="https://linkedin.com/in/nshuti-martin15" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105">
-                  Connect
-                </a>
-              </div>
-            </div>
-          </div>
-
           {/* Contact Form Section */}
           <div className="max-w-4xl mx-auto mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up delay-400">
             <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-3xl shadow-2xl border border-slate-200/50 dark:border-slate-700/50 relative overflow-hidden">

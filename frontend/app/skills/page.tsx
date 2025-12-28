@@ -62,20 +62,6 @@ export default function Skills() {
       ]
     },
     {
-      category: "Cybersecurity",
-      icon: "🔒",
-      gradient: "from-teal-500 via-cyan-500 to-teal-600",
-      bgGradient: "from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20",
-      borderColor: "border-teal-200 dark:border-teal-700",
-      textColor: "text-teal-800 dark:text-teal-200",
-      buttonColor: "bg-teal-600 hover:bg-teal-700",
-      items: [
-        { name: "Threat Detection Systems", highlight: true },
-        { name: "Zero-Trust Network Architecture", highlight: true },
-        { name: "Vulnerability Assessment & Penetration Testing", highlight: true }
-      ]
-    },
-    {
       category: "SpaceTech & Drones",
       icon: "🚀",
       gradient: "from-slate-500 via-gray-500 to-slate-600",
@@ -111,7 +97,7 @@ export default function Skills() {
       <header className="sticky top-0 z-50 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 p-3 sm:p-4">
         <nav className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-            <a href="/" className="hover:opacity-80 transition-opacity">Mugabo</a>
+            <a href="/" className="hover:opacity-80 transition-opacity">~M</a>
           </h1>
 
           {/* Desktop Navigation */}

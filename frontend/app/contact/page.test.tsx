@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
+import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, beforeEach, jest } from '@jest/globals'
 import Contact from './page'

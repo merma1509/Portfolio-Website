@@ -54,7 +54,7 @@ export default function Blog() {
       <header className="sticky top-0 z-50 bg-white/98 dark:bg-slate-900/98 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 p-3 sm:p-4">
         <nav className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 dark:text-white">
-            <a href="/" className="hover:opacity-80 transition-opacity">Mugabo</a>
+            <a href="/" className="hover:opacity-80 transition-opacity">~M</a>
           </h1>
 
           {/* Desktop Navigation */}
