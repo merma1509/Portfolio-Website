@@ -2,9 +2,13 @@ import os
 import asyncpg
 from typing import AsyncGenerator, Optional, Dict, Any
 from contextlib import asynccontextmanager
+from fastapi import HTTPException
 
 # Database URL from environment variable or default
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://mugabo15:15052000@localhost:5432/portfolio_db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Check if database is configured
+DB_CONFIGURED = bool(DATABASE_URL)
 
 # Database connection pool
 _pool: Optional[asyncpg.Pool] = None
@@ -16,6 +20,9 @@ async def get_db() -> AsyncGenerator[asyncpg.Connection, None]:
     Yields:
         asyncpg.Connection: A database connection from the pool
     """
+    if not DB_CONFIGURED:
+        raise HTTPException(status_code=503, detail="Database not configured")
+    
     global _pool
     if _pool is None:
         _pool = await asyncpg.create_pool(
@@ -44,6 +51,10 @@ async def get_db() -> AsyncGenerator[asyncpg.Connection, None]:
 
 async def init_db():
     """Initialize the database and create tables if they don't exist."""
+    if not DB_CONFIGURED:
+        print("Database not configured - skipping database initialization")
+        return
+        
     # Create a direct connection for initialization
     conn = await asyncpg.connect(DATABASE_URL)
     
@@ -137,6 +148,7 @@ async def init_db():
     finally:
         await conn.close()
 
-# Initialize the database when this module is imported
-import asyncio
-asyncio.get_event_loop().run_until_complete(init_db())
+# Initialize the database when this module is imported (only if configured)
+if DB_CONFIGURED:
+    import asyncio
+    asyncio.get_event_loop().run_until_complete(init_db())
