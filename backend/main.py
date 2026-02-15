@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Production-ready FastAPI app with graceful database handling
+Production-ready FastAPI app with graceful database handling - VERSION 2.0
 """
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,7 +12,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Portfolio Backend API")
+app = FastAPI(title="Portfolio Backend API - v2.0")
 
 # CORS for frontend
 app.add_middleware(
@@ -31,7 +31,7 @@ class ContactMessage(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "Portfolio Backend API - Production Ready"}
+    return {"message": "Portfolio Backend API - Production Ready v2.0"}
 
 @app.get("/health")
 async def health():
