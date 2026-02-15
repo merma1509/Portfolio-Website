@@ -40,7 +40,7 @@ A modern, responsive personal portfolio website showcasing expertise in AI, IoT/
 
 ## Project Structure
 
-```
+```bash
 Portfolio-Website/
 ├── .git/                 # Git repository
 ├── .gitignore           # Git ignore file (add if needed)
@@ -56,6 +56,210 @@ Portfolio-Website/
     ├── components/      # Reusable UI components
     ├── public/          # Static assets
     └── package.json     # Node dependencies
+```
+
+## System Architecture
+
+### High-Level Architecture Overview
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        A[Web Browser] --> B[Next.js Frontend]
+        B --> C[React Components]
+        B --> D[Tailwind CSS]
+    end
+    
+    subgraph "API Layer"
+        E[FastAPI Backend]
+        F[CORS Middleware]
+        G[API Routes]
+        E --> F
+        E --> G
+    end
+    
+    subgraph "Data Layer"
+        H[PostgreSQL Database]
+        I[Connection Pool]
+        E --> I
+        I --> H
+    end
+    
+    subgraph "External Services"
+        J[Email Service]
+        K[Analytics]
+    end
+    
+    B -->|HTTP/HTTPS| E
+    G -->|SQL Queries| H
+    E -->|Notifications| J
+    B -->|Tracking| K
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style E fill:#e8f5e8
+    style H fill:#fff3e0
+```
+
+### API Flow Architecture
+
+```mermaid
+sequenceDiagram
+    participant C as Client (Browser)
+    participant F as Next.js Frontend
+    participant A as FastAPI Backend
+    participant D as PostgreSQL Database
+    
+    Note over C,D: Contact Form Submission Flow
+    C->>F: Fills contact form
+    F->>F: Client-side validation
+    F->>A: POST /api/contact (JSON data)
+    A->>A: Server-side validation
+    A->>D: INSERT INTO contact_messages
+    D-->>A: Return message_id
+    A-->>F: Success response
+    F-->>C: Show success message
+    
+    Note over C,D: Newsletter Subscription Flow
+    C->>F: Subscribe to newsletter
+    F->>A: POST /api/newsletter
+    A->>D: INSERT INTO newsletter_subscribers
+    D-->>A: Confirmation
+    A-->>F: Success response
+    F-->>C: Show confirmation
+```
+
+### Database Schema Architecture
+
+```mermaid
+erDiagram
+    contact_messages {
+        int id PK
+        varchar name
+        varchar email
+        text message
+        varchar phone
+        varchar occupation
+        timestamp created_at
+    }
+    
+    newsletter_subscribers {
+        int id PK
+        varchar name
+        varchar email UK
+        timestamp subscribed_at
+    }
+    
+    project_inquiries {
+        int id PK
+        varchar project_name
+        varchar name
+        varchar email
+        text inquiry
+        varchar phone
+        varchar occupation
+        timestamp created_at
+    }
+    
+    feedback {
+        int id PK
+        varchar type
+        text content
+        int rating
+        timestamp created_at
+    }
+    
+    users {
+        int id PK
+        varchar username UK
+        varchar email UK
+        varchar password_hash
+        timestamp created_at
+    }
+    
+    blogs {
+        int id PK
+        varchar title
+        text content
+        int author_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    users ||--o{ blogs : "creates"
+```
+
+### Deployment Architecture
+
+```mermaid
+graph TB
+    subgraph "Development Environment"
+        A1[Local Machine]
+        B1[Next.js :3000]
+        C1[FastAPI :8000]
+        D1[PostgreSQL :5432]
+        A1 --> B1
+        A1 --> C1
+        C1 --> D1
+    end
+    
+    subgraph "Production Environment"
+        A2[Users]
+        B2[Vercel - Frontend]
+        C2[Railway/Heroku - Backend]
+        D2[PostgreSQL Cloud]
+        E2[Domain Name]
+        F2[SSL Certificate]
+        
+        A2 -->|HTTPS| E2
+        E2 --> B2
+        B2 -->|API Calls| C2
+        C2 -->|Database| D2
+        E2 --> F2
+    end
+    
+    subgraph "CI/CD Pipeline"
+        G1[GitHub Repository]
+        G2[Automated Tests]
+        G3[Build Process]
+        G4[Deployment]
+        
+        G1 --> G2
+        G2 --> G3
+        G3 --> G4
+        G4 --> B2
+        G4 --> C2
+    end
+```
+
+### Technology Stack Overview
+
+```mermaid
+mindmap
+  root((Portfolio Website))
+    Frontend
+      Next.js 16
+      React 19
+      TypeScript
+      Tailwind CSS
+      Framer Motion
+      React Icons
+    Backend
+      FastAPI
+      Python 3.9+
+      Uvicorn
+      Pydantic
+      AsyncPG
+    Database
+      PostgreSQL
+      Connection Pooling
+      Indexing
+    DevOps
+      Git
+      Vercel
+      Railway/Heroku
+      GitHub Actions
+      Environment Variables
 ```
 
 ## Getting Started
@@ -75,7 +279,8 @@ Portfolio-Website/
    git clone https://github.com/merma1509/Portfolio-Website.git
    cd Portfolio-Website
    ```
-2. **Backend Setup** (for contact form and dynamic features):
+
+2.**Backend Setup** (for contact form and dynamic features):
 
    ```bash
    cd backend
@@ -84,7 +289,8 @@ Portfolio-Website/
    pip install -r requirements.txt
    uvicorn main:app --reload  # Runs on http://localhost:8000
    ```
-3. **Frontend Setup** (main website):
+
+3.**Frontend Setup** (main website):
 
    ```bash
    cd frontend
@@ -92,16 +298,18 @@ Portfolio-Website/
    npm install
    npm run dev  # Runs on http://localhost:3000
    ```
-4. **Environment Variables** (create `.env` in backend/):
 
-   ```
+4.**Environment Variables** (create `.env` in backend/):
+
+   ```bash
    DATABASE_URL=postgresql://username:password@localhost/portfolio_db
    SECRET_KEY=your-secret-key-here
    ```
-5. **Build for Production**:
 
-   - Frontend: `npm run build && npm start`
-   - Backend: Deploy to hosting service.
+5.**Build for Production**:
+
+- Frontend: `npm run build && npm start`
+- Backend: Deploy to hosting service.
 
 ## Development
 
@@ -130,10 +338,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-**Mugabo (Niyonshuti Martin)**
+- Email: [Email](mailto:aimemartin018@gmail.com)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/nshuti-martin15)
+- GitHub: [GitHub](https://github.com/merma1509)
 
-- Email: [aimemartin018@gmail.com](mailto:aimemartin018@gmail.com)
-- LinkedIn: [linkedin.com/in/nshuti-martin15](https://linkedin.com/in/nshuti-martin15)
-- GitHub: [github.com/merma1509](https://github.com/merma1509)
-
-Built for innovation and impact with ❤️ by Mugabo. Let's connect!
+Built for innovation and impact with ❤️ by ~M~. Let's connect!

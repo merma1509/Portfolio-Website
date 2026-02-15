@@ -30,6 +30,9 @@
     "react",
     "typescript"
   ],
-  "author": "Mugabo (Niyonshuti Martin)",
-  "license": "MIT"
+  "author": "~M~",
+  "license": "MIT",
+  "dependencies": {
+    "heroku": "^8.7.1"
+  }
 }
