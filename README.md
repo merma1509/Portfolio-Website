@@ -139,12 +139,6 @@ sequenceDiagram
         A-->>-F: Success response
         F-->>-C: Show confirmation
     end
-    
-    %% Color themes for participants
-    participant C fill:#4FC3F7,stroke:#0288D1,color:#000
-    participant F fill:#81C784,stroke:#388E3C,color:#000
-    participant A fill:#4DB6AC,stroke:#00796B,color:#000
-    participant D fill:#FF8A65,stroke:#D84315,color:#000
 ```
 
 ### Database Schema Architecture
@@ -294,19 +288,6 @@ mindmap
       Railway
       GitHub Actions
       Environment Variables
-  
-  %% Color themes
-  classDef frontend fill:#81C784,stroke:#388E3C,color:#000
-  classDef backend fill:#4DB6AC,stroke:#00796B,color:#000
-  classDef database fill:#FFB74D,stroke:#F57C00,color:#000
-  classDef devops fill:#64B5F6,stroke:#1976D2,color:#000
-  classDef root fill:#BA68C8,stroke:#7B1FA2,color:#000
-  
-  class Portfolio Website root
-  class NextJS,React,TypeScript,Tailwind,Framer,ReactIcons frontend
-  class FastAPI,Python,Uvicorn,Pydantic,AsyncPG backend
-  class PostgreSQL,Connection,Indexing database
-  class Git,Vercel,Railway,GitHub,Environment devops
 ```
 
 ## Getting Started
