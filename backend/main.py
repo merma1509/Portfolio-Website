@@ -4,6 +4,7 @@ Simple FastAPI app for Railway deployment test
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import os
 
 app = FastAPI(title="Portfolio Backend API")
@@ -17,6 +18,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class ContactMessage(BaseModel):
+    name: str
+    email: str
+    message: str
+
 @app.get("/")
 async def root():
     return {"message": "Portfolio Backend API - Simplified"}
@@ -26,8 +32,8 @@ async def health():
     return {"status": "healthy"}
 
 @app.post("/api/contact")
-async def contact_test(data: dict):
-    return {"message": "Contact endpoint working", "received": data}
+async def contact_test(contact: ContactMessage):
+    return {"message": "Contact endpoint working", "received": contact.dict()}
 
 if __name__ == "__main__":
     import uvicorn
