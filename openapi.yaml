@@ -1,0 +1,334 @@
+openapi: 3.0.0
+info:
+  title: Portfolio Backend API
+  description: API for portfolio website backend services
+  version: 1.0.0
+  contact:
+    name: Portfolio API Support
+    email: aimemartin018@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000/api
+    description: Development server
+  - url: https://sparkling-growth.railway.app/api
+    description: Production server
+
+paths:
+  /:
+    get:
+      summary: Root endpoint
+      description: Returns basic API information
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Portfolio Backend API - Production Ready v2.0"
+
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the health status of the API
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+
+  /contact:
+    post:
+      summary: Submit contact form
+      description: Submit a contact message to the portfolio owner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactMessage'
+      responses:
+        '200':
+          description: Contact message submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Contact form submitted successfully"
+                  status:
+                    type: string
+                    example: "success"
+                  received:
+                    $ref: '#/components/schemas/ContactMessage'
+        '400':
+          description: Bad request - invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /newsletter:
+    post:
+      summary: Subscribe to newsletter
+      description: Subscribe to the portfolio newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsletterSubscriber'
+      responses:
+        '200':
+          description: Successfully subscribed to newsletter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Successfully subscribed to newsletter"
+                  status:
+                    type: string
+                    example: "success"
+        '400':
+          description: Bad request - invalid email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Email already subscribed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /inquiry:
+    post:
+      summary: Submit project inquiry
+      description: Submit a project or collaboration inquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInquiry'
+      responses:
+        '200':
+          description: Inquiry submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Project inquiry submitted successfully"
+                  status:
+                    type: string
+                    example: "success"
+                  inquiry_id:
+                    type: integer
+                    example: 123
+        '400':
+          description: Bad request - invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /feedback:
+    post:
+      summary: Submit feedback
+      description: Submit feedback about the portfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '200':
+          description: Feedback submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Feedback submitted successfully"
+                  status:
+                    type: string
+                    example: "success"
+        '400':
+          description: Bad request - invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    ContactMessage:
+      type: object
+      required:
+        - name
+        - email
+        - message
+      properties:
+        name:
+          type: string
+          example: "John Doe"
+          description: Full name of the sender
+        email:
+          type: string
+          format: email
+          example: "john@example.com"
+          description: Email address of the sender
+        phone:
+          type: string
+          example: "+1234567890"
+          description: Phone number (optional)
+        message:
+          type: string
+          example: "I would like to discuss a potential collaboration"
+          description: The message content
+
+    NewsletterSubscriber:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: "subscriber@example.com"
+          description: Email address for newsletter subscription
+
+    ProjectInquiry:
+      type: object
+      required:
+        - name
+        - email
+        - project_type
+        - message
+      properties:
+        name:
+          type: string
+          example: "Jane Smith"
+          description: Name of the inquirer
+        email:
+          type: string
+          format: email
+          example: "jane@company.com"
+          description: Email address of the inquirer
+        company:
+          type: string
+          example: "Tech Company Inc."
+          description: Company name (optional)
+        project_type:
+          type: string
+          enum: ["web_development", "mobile_app", "data_science", "consulting", "other"]
+          example: "web_development"
+          description: Type of project inquiry
+        budget:
+          type: string
+          example: "$5000-10000"
+          description: Project budget range (optional)
+        timeline:
+          type: string
+          example: "2-3 months"
+          description: Expected project timeline (optional)
+        message:
+          type: string
+          example: "We need a new website for our business"
+          description: Detailed project description
+
+    Feedback:
+      type: object
+      required:
+        - type
+        - message
+      properties:
+        name:
+          type: string
+          example: "Anonymous User"
+          description: Name of the feedback provider (optional)
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+          description: Email address (optional)
+        type:
+          type: string
+          enum: ["bug_report", "feature_request", "general_feedback", "suggestion"]
+          example: "general_feedback"
+          description: Type of feedback
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 4
+          description: Rating from 1-5 (optional)
+        message:
+          type: string
+          example: "Great portfolio! The design is very professional."
+          description: The feedback message
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Bad request"
+        message:
+          type: string
+          example: "Invalid input data provided"
+        details:
+          type: object
+          description: Additional error details (optional)
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT authentication token
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Health
+    description: Health check and status endpoints
+  - name: Contact
+    description: Contact form and communication endpoints
+  - name: Newsletter
+    description: Newsletter subscription endpoints
+  - name: Inquiries
+    description: Project inquiry endpoints
+  - name: Feedback
+    description: User feedback endpoints
