@@ -130,7 +130,7 @@ sequenceDiagram
         F-->>-C: Show success message
     end
     
-    rect rgb(240, 255, 240)
+    rect rgb(16, 168, 16)
         Note over C,D: Newsletter Subscription Flow
         C->>+F: Subscribe to newsletter
         F->>+A: POST /api/newsletter
@@ -288,6 +288,8 @@ mindmap
       Railway
       GitHub Actions
       Environment Variables
+
+    style root fill:#BA68C8,stroke:#7B1FA2,color:#000
 ```
 
 ## Getting Started
@@ -366,9 +368,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-- 📧 **Email**: [aimemartin018@gmail.com](mailto:aimemartin018@gmail.com)
-- 💼 **LinkedIn**: [nshuti-martin15](https://linkedin.com/in/nshuti-martin15)
-- 🐙 **GitHub**: [merma1509](https://github.com/merma1509)
+- 📧 [aimemartin018@gmail.com](mailto:aimemartin018@gmail.com)
+- 💼 [nshuti-martin15](https://linkedin.com/in/nshuti-martin15)
+- 🐙 [merma1509](https://github.com/merma1509)
 
 ---
 
