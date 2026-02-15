@@ -198,26 +198,6 @@ erDiagram
         timestamp updated_at
     }
     
-    %% Beautiful color scheme for entities
-    contact_messages {
-        fill:#FFB74D,stroke:#F57C00,color:#000
-    }
-    newsletter_subscribers {
-        fill:#81C784,stroke:#388E3C,color:#000
-    }
-    project_inquiries {
-        fill:#4FC3F7,stroke:#0288D1,color:#000
-    }
-    feedback {
-        fill:#BA68C8,stroke:#7B1FA2,color:#000
-    }
-    users {
-        fill:#4DB6AC,stroke:#00796B,color:#000
-    }
-    blogs {
-        fill:#FF8A65,stroke:#D84315,color:#000
-    }
-    
     users ||--o{ blogs : "creates"
 ```
 
