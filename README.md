@@ -392,6 +392,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Email: [Email](mailto:aimemartin018@gmail.com)| LinkedIn: [LinkedIn](https://linkedin.com/in/nshuti-martin15)| GitHub: [GitHub](https://github.com/merma1509)
+- 📧 **Email**: [aimemartin018@gmail.com](mailto:aimemartin018@gmail.com)
+- 💼 **LinkedIn**: [nshuti-martin15](https://linkedin.com/in/nshuti-martin15)
+- 🐙 **GitHub**: [merma1509](https://github.com/merma1509)
 
-Built for innovation and impact with ❤️ by ~M. Let's connect!
+---
+
+Built for innovation and impact with ❤️ by Mugabo. Let's connect!
