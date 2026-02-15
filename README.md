@@ -118,7 +118,7 @@ sequenceDiagram
     participant A as Backend
     participant D as Database
     
-    rect rgb(240, 248, 255)
+    rect rgb(0, 0, 0)
         Note over C,D: Contact Form Submission Flow
         C->>+F: Fills contact form
         F->>F: Client-side validation
@@ -130,7 +130,7 @@ sequenceDiagram
         F-->>-C: Show success message
     end
     
-    rect rgb(16, 168, 16)
+    rect rgba(0, 0, 0, 0)
         Note over C,D: Newsletter Subscription Flow
         C->>+F: Subscribe to newsletter
         F->>+A: POST /api/newsletter
@@ -288,8 +288,6 @@ mindmap
       Railway
       GitHub Actions
       Environment Variables
-
-    style root fill:#BA68C8,stroke:#7B1FA2,color:#000
 ```
 
 ## Getting Started
