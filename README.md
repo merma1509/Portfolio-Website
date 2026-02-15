@@ -65,29 +65,29 @@ Portfolio-Website/
 ```mermaid
 graph TB
     subgraph "Client Layer"
-        A[Web Browser] --> B[Next.js Frontend]
-        B --> C[React Components]
-        B --> D[Tailwind CSS]
+        A[🌐 Web Browser] --> B[⚛️ Next.js Frontend]
+        B --> C[🧩 React Components]
+        B --> D[🎨 Tailwind CSS]
     end
     
     subgraph "API Layer"
-        E[FastAPI Backend]
-        F[CORS Middleware]
-        G[API Routes]
+        E[🚀 FastAPI Backend]
+        F[🔐 CORS Middleware]
+        G[📡 API Routes]
         E --> F
         E --> G
     end
     
     subgraph "Data Layer"
-        H[PostgreSQL Database]
-        I[Connection Pool]
+        H[🗄️ PostgreSQL Database]
+        I[🔗 Connection Pool]
         E --> I
         I --> H
     end
     
     subgraph "External Services"
-        J[Email Service]
-        K[Analytics]
+        J[📧 Email Service]
+        K[📊 Analytics]
     end
     
     B -->|HTTP/HTTPS| E
@@ -95,38 +95,56 @@ graph TB
     E -->|Notifications| J
     B -->|Tracking| K
     
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style E fill:#e8f5e8
-    style H fill:#fff3e0
+    %% Beautiful color scheme
+    style A fill:#4FC3F7,stroke:#0288D1,color:#000
+    style B fill:#81C784,stroke:#388E3C,color:#000
+    style C fill:#FFB74D,stroke:#F57C00,color:#000
+    style D fill:#9575CD,stroke:#5E35B1,color:#000
+    style E fill:#4DB6AC,stroke:#00796B,color:#000
+    style F fill:#FF8A65,stroke:#D84315,color:#000
+    style G fill:#A1887F,stroke:#5D4037,color:#000
+    style H fill:#F06292,stroke:#C2185B,color:#000
+    style I fill:#BA68C8,stroke:#7B1FA2,color:#000
+    style J fill:#64B5F6,stroke:#1976D2,color:#000
+    style K fill:#4DD0E1,stroke:#0097A7,color:#000
 ```
 
 ### API Flow Architecture
 
 ```mermaid
 sequenceDiagram
-    participant C as Client (Browser)
-    participant F as Next.js Frontend
-    participant A as FastAPI Backend
-    participant D as PostgreSQL Database
+    participant C as 🌐 Client
+    participant F as ⚛️ Frontend
+    participant A as 🚀 Backend
+    participant D as 🗄️ Database
     
-    Note over C,D: Contact Form Submission Flow
-    C->>F: Fills contact form
-    F->>F: Client-side validation
-    F->>A: POST /api/contact (JSON data)
-    A->>A: Server-side validation
-    A->>D: INSERT INTO contact_messages
-    D-->>A: Return message_id
-    A-->>F: Success response
-    F-->>C: Show success message
+    rect rgb(240, 248, 255)
+        Note over C,D: 📝 Contact Form Submission Flow
+        C->>+F: 📋 Fills contact form
+        F->>F: ✅ Client-side validation
+        F->>+A: 📤 POST /api/contact (JSON data)
+        A->>A: 🔍 Server-side validation
+        A->>+D: 💾 INSERT INTO contact_messages
+        D-->>-A: 🆔 Return message_id
+        A-->>-F: ✅ Success response
+        F-->>-C: 🎉 Show success message
+    end
     
-    Note over C,D: Newsletter Subscription Flow
-    C->>F: Subscribe to newsletter
-    F->>A: POST /api/newsletter
-    A->>D: INSERT INTO newsletter_subscribers
-    D-->>A: Confirmation
-    A-->>F: Success response
-    F-->>C: Show confirmation
+    rect rgb(240, 255, 240)
+        Note over C,D: 📧 Newsletter Subscription Flow
+        C->>+F: 📰 Subscribe to newsletter
+        F->>+A: 📤 POST /api/newsletter
+        A->>+D: 💾 INSERT INTO newsletter_subscribers
+        D-->>-A: ✅ Confirmation
+        A-->>-F: ✅ Success response
+        F-->>-C: 🎉 Show confirmation
+    end
+    
+    %% Color themes for participants
+    participant C fill:#4FC3F7,stroke:#0288D1,color:#000
+    participant F fill:#81C784,stroke:#388E3C,color:#000
+    participant A fill:#4DB6AC,stroke:#00796B,color:#000
+    participant D fill:#F06292,stroke:#C2185B,color:#000
 ```
 
 ### Database Schema Architecture
@@ -134,56 +152,76 @@ sequenceDiagram
 ```mermaid
 erDiagram
     contact_messages {
-        int id PK
-        varchar name
-        varchar email
-        text message
-        varchar phone
-        varchar occupation
-        timestamp created_at
+        int id PK "🆔"
+        varchar name "👤"
+        varchar email "📧"
+        text message "💬"
+        varchar phone "📱"
+        varchar occupation "💼"
+        timestamp created_at "📅"
     }
     
     newsletter_subscribers {
-        int id PK
-        varchar name
-        varchar email UK
-        timestamp subscribed_at
+        int id PK "🆔"
+        varchar name "👤"
+        varchar email UK "📧"
+        timestamp subscribed_at "📅"
     }
     
     project_inquiries {
-        int id PK
-        varchar project_name
-        varchar name
-        varchar email
-        text inquiry
-        varchar phone
-        varchar occupation
-        timestamp created_at
+        int id PK "🆔"
+        varchar project_name "🏗️"
+        varchar name "👤"
+        varchar email "📧"
+        text inquiry "❓"
+        varchar phone "📱"
+        varchar occupation "💼"
+        timestamp created_at "📅"
     }
     
     feedback {
-        int id PK
-        varchar type
-        text content
-        int rating
-        timestamp created_at
+        int id PK "🆔"
+        varchar type "📝"
+        text content "💬"
+        int rating "⭐"
+        timestamp created_at "📅"
     }
     
     users {
-        int id PK
-        varchar username UK
-        varchar email UK
-        varchar password_hash
-        timestamp created_at
+        int id PK "🆔"
+        varchar username UK "👤"
+        varchar email UK "📧"
+        varchar password_hash "🔐"
+        timestamp created_at "📅"
     }
     
     blogs {
-        int id PK
-        varchar title
-        text content
-        int author_id FK
-        timestamp created_at
-        timestamp updated_at
+        int id PK "🆔"
+        varchar title "📰"
+        text content "📝"
+        int author_id FK "✍️"
+        timestamp created_at "📅"
+        timestamp updated_at "🔄"
+    }
+    
+    %% Beautiful color scheme for entities
+    contact_messages {
+        fill:#FFB74D,stroke:#F57C00,color:#000
+    }
+    newsletter_subscribers {
+        fill:#81C784,stroke:#388E3C,color:#000
+    }
+    project_inquiries {
+        fill:#4FC3F7,stroke:#0288D1,color:#000
+    }
+    feedback {
+        fill:#BA68C8,stroke:#7B1FA2,color:#000
+    }
+    users {
+        fill:#4DB6AC,stroke:#00796B,color:#000
+    }
+    blogs {
+        fill:#FF8A65,stroke:#D84315,color:#000
     }
     
     users ||--o{ blogs : "creates"
@@ -193,36 +231,36 @@ erDiagram
 
 ```mermaid
 graph TB
-    subgraph "Development Environment"
-        A1[Local Machine]
-        B1[Next.js :3000]
-        C1[FastAPI :8000]
-        D1[PostgreSQL :5432]
+    subgraph "🛠️ Development Environment"
+        A1[💻 Local Machine]
+        B1[⚛️ Next.js :3000]
+        C1[🚀 FastAPI :8000]
+        D1[🗄️ PostgreSQL :5432]
         A1 --> B1
         A1 --> C1
         C1 --> D1
     end
     
-    subgraph "Production Environment"
-        A2[Users]
-        B2[Vercel - Frontend]
-        C2[Railway/Heroku - Backend]
-        D2[PostgreSQL Cloud]
-        E2[Domain Name]
-        F2[SSL Certificate]
+    subgraph "🌐 Production Environment"
+        A2[👥 Users]
+        B2[🔥 Vercel - Frontend]
+        C2[🚂 Railway - Backend]
+        D2[☁️ PostgreSQL Cloud]
+        E2[🌐 Domain Name]
+        F2[🔒 SSL Certificate]
         
         A2 -->|HTTPS| E2
         E2 --> B2
-        B2 -->|API Calls| C2
-        C2 -->|Database| D2
+        B2 -->|📡 API Calls| C2
+        C2 -->|💾 Database| D2
         E2 --> F2
     end
     
-    subgraph "CI/CD Pipeline"
-        G1[GitHub Repository]
-        G2[Automated Tests]
-        G3[Build Process]
-        G4[Deployment]
+    subgraph "🔄 CI/CD Pipeline"
+        G1[📦 GitHub Repository]
+        G2[🧪 Automated Tests]
+        G3[🏗️ Build Process]
+        G4[🚀 Deployment]
         
         G1 --> G2
         G2 --> G3
@@ -230,36 +268,52 @@ graph TB
         G4 --> B2
         G4 --> C2
     end
+    
+    %% Beautiful color scheme
+    style A1 fill:#E1F5FE,stroke:#0288D1,color:#000
+    style B1 fill:#E8F5E8,stroke:#388E3C,color:#000
+    style C1 fill:#FFF3E0,stroke:#F57C00,color:#000
+    style D1 fill:#F3E5F5,stroke:#7B1FA2,color:#000
+    style A2 fill:#FFEBEE,stroke:#D32F2F,color:#000
+    style B2 fill:#E8F5E8,stroke:#388E3C,color:#000
+    style C2 fill:#FFF3E0,stroke:#F57C00,color:#000
+    style D2 fill:#F3E5F5,stroke:#7B1FA2,color:#000
+    style E2 fill:#E1F5FE,stroke:#0288D1,color:#000
+    style F2 fill:#FFEBEE,stroke:#D32F2F,color:#000
+    style G1 fill:#F3E5F5,stroke:#7B1FA2,color:#000
+    style G2 fill:#FFF3E0,stroke:#F57C00,color:#000
+    style G3 fill:#E8F5E8,stroke:#388E3C,color:#000
+    style G4 fill:#E1F5FE,stroke:#0288D1,color:#000
 ```
 
 ### Technology Stack Overview
 
 ```mermaid
 mindmap
-  root((Portfolio Website))
-    Frontend
-      Next.js 16
-      React 19
-      TypeScript
-      Tailwind CSS
-      Framer Motion
-      React Icons
-    Backend
-      FastAPI
-      Python 3.9+
-      Uvicorn
-      Pydantic
-      AsyncPG
-    Database
-      PostgreSQL
-      Connection Pooling
-      Indexing
-    DevOps
-      Git
-      Vercel
-      Railway/Heroku
-      GitHub Actions
-      Environment Variables
+  root((🌟 Portfolio Website))
+    ⚛️ Frontend
+      🔥 Next.js 16
+      🧩 React 19
+      📘 TypeScript
+      🎨 Tailwind CSS
+      🎬 Framer Motion
+      🎯 React Icons
+    🚀 Backend
+      ⚡ FastAPI
+      🐍 Python 3.9+
+      🌟 Uvicorn
+      📋 Pydantic
+      🔗 AsyncPG
+    🗄️ Database
+      🐘 PostgreSQL
+      🔄 Connection Pooling
+      📚 Indexing
+    🛠️ DevOps
+      📦 Git
+      🔥 Vercel
+      🚂 Railway
+      🔄 GitHub Actions
+      🔐 Environment Variables
 ```
 
 ## Getting Started
@@ -339,7 +393,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 - Email: [Email](mailto:aimemartin018@gmail.com)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/nshuti-martin15)
-- GitHub: [GitHub](https://github.com/merma1509)
+LinkedIn: [LinkedIn](https://linkedin.com/in/nshuti-martin15)| GitHub: [GitHub](https://github.com/merma1509)
 
-Built for innovation and impact with ❤️ by ~M~. Let's connect!
+Built for innovation and impact with ❤️ by ~M. Let's connect!
