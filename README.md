@@ -65,29 +65,29 @@ Portfolio-Website/
 ```mermaid
 graph TB
     subgraph "Client Layer"
-        A[🌐 Web Browser] --> B[⚛️ Next.js Frontend]
-        B --> C[🧩 React Components]
-        B --> D[🎨 Tailwind CSS]
+        A[Web Browser] --> B[Next.js Frontend]
+        B --> C[React Components]
+        B --> D[Tailwind CSS]
     end
     
     subgraph "API Layer"
-        E[🚀 FastAPI Backend]
-        F[🔐 CORS Middleware]
-        G[📡 API Routes]
+        E[FastAPI Backend]
+        F[CORS Middleware]
+        G[API Routes]
         E --> F
         E --> G
     end
     
     subgraph "Data Layer"
-        H[🗄️ PostgreSQL Database]
-        I[🔗 Connection Pool]
+        H[PostgreSQL Database]
+        I[Connection Pool]
         E --> I
         I --> H
     end
     
     subgraph "External Services"
-        J[📧 Email Service]
-        K[📊 Analytics]
+        J[Email Service]
+        K[Analytics]
     end
     
     B -->|HTTP/HTTPS| E
@@ -113,31 +113,31 @@ graph TB
 
 ```mermaid
 sequenceDiagram
-    participant C as 🌐 Client
-    participant F as ⚛️ Frontend
-    participant A as 🚀 Backend
-    participant D as 🗄️ Database
+    participant C as Client
+    participant F as Frontend
+    participant A as Backend
+    participant D as Database
     
     rect rgb(240, 248, 255)
-        Note over C,D: 📝 Contact Form Submission Flow
-        C->>+F: 📋 Fills contact form
-        F->>F: ✅ Client-side validation
-        F->>+A: 📤 POST /api/contact (JSON data)
-        A->>A: 🔍 Server-side validation
-        A->>+D: 💾 INSERT INTO contact_messages
-        D-->>-A: 🆔 Return message_id
-        A-->>-F: ✅ Success response
-        F-->>-C: 🎉 Show success message
+        Note over C,D: Contact Form Submission Flow
+        C->>+F: Fills contact form
+        F->>F: Client-side validation
+        F->>+A: POST /api/contact (JSON data)
+        A->>A: Server-side validation
+        A->>+D: INSERT INTO contact_messages
+        D-->>-A: Return message_id
+        A-->>-F: Success response
+        F-->>-C: Show success message
     end
     
     rect rgb(240, 255, 240)
-        Note over C,D: 📧 Newsletter Subscription Flow
-        C->>+F: 📰 Subscribe to newsletter
-        F->>+A: 📤 POST /api/newsletter
-        A->>+D: 💾 INSERT INTO newsletter_subscribers
-        D-->>-A: ✅ Confirmation
-        A-->>-F: ✅ Success response
-        F-->>-C: 🎉 Show confirmation
+        Note over C,D: Newsletter Subscription Flow
+        C->>+F: Subscribe to newsletter
+        F->>+A: POST /api/newsletter
+        A->>+D: INSERT INTO newsletter_subscribers
+        D-->>-A: Confirmation
+        A-->>-F: Success response
+        F-->>-C: Show confirmation
     end
     
     %% Color themes for participants
@@ -152,56 +152,56 @@ sequenceDiagram
 ```mermaid
 erDiagram
     contact_messages {
-        int id PK "🆔"
-        varchar name "👤"
-        varchar email "📧"
-        text message "💬"
-        varchar phone "📱"
-        varchar occupation "💼"
-        timestamp created_at "📅"
+        int id PK
+        varchar name
+        varchar email
+        text message
+        varchar phone
+        varchar occupation
+        timestamp created_at
     }
     
     newsletter_subscribers {
-        int id PK "🆔"
-        varchar name "👤"
-        varchar email UK "📧"
-        timestamp subscribed_at "📅"
+        int id PK
+        varchar name
+        varchar email UK
+        timestamp subscribed_at
     }
     
     project_inquiries {
-        int id PK "🆔"
-        varchar project_name "🏗️"
-        varchar name "👤"
-        varchar email "📧"
-        text inquiry "❓"
-        varchar phone "📱"
-        varchar occupation "💼"
-        timestamp created_at "📅"
+        int id PK
+        varchar project_name
+        varchar name
+        varchar email
+        text inquiry
+        varchar phone
+        varchar occupation
+        timestamp created_at
     }
     
     feedback {
-        int id PK "🆔"
-        varchar type "📝"
-        text content "💬"
-        int rating "⭐"
-        timestamp created_at "📅"
+        int id PK
+        varchar type
+        text content
+        int rating
+        timestamp created_at
     }
     
     users {
-        int id PK "🆔"
-        varchar username UK "👤"
-        varchar email UK "📧"
-        varchar password_hash "🔐"
-        timestamp created_at "📅"
+        int id PK
+        varchar username UK
+        varchar email UK
+        varchar password_hash
+        timestamp created_at
     }
     
     blogs {
-        int id PK "🆔"
-        varchar title "📰"
-        text content "📝"
-        int author_id FK "✍️"
-        timestamp created_at "📅"
-        timestamp updated_at "🔄"
+        int id PK
+        varchar title
+        text content
+        int author_id FK
+        timestamp created_at
+        timestamp updated_at
     }
     
     %% Beautiful color scheme for entities
@@ -231,36 +231,36 @@ erDiagram
 
 ```mermaid
 graph TB
-    subgraph "🛠️ Development Environment"
-        A1[💻 Local Machine]
-        B1[⚛️ Next.js :3000]
-        C1[🚀 FastAPI :8000]
-        D1[🗄️ PostgreSQL :5432]
+    subgraph "Development Environment"
+        A1[Local Machine]
+        B1[Next.js :3000]
+        C1[FastAPI :8000]
+        D1[PostgreSQL :5432]
         A1 --> B1
         A1 --> C1
         C1 --> D1
     end
     
-    subgraph "🌐 Production Environment"
-        A2[👥 Users]
-        B2[🔥 Vercel - Frontend]
-        C2[🚂 Railway - Backend]
-        D2[☁️ PostgreSQL Cloud]
-        E2[🌐 Domain Name]
-        F2[🔒 SSL Certificate]
+    subgraph "Production Environment"
+        A2[Users]
+        B2[Vercel - Frontend]
+        C2[Railway - Backend]
+        D2[PostgreSQL Cloud]
+        E2[Domain Name]
+        F2[SSL Certificate]
         
         A2 -->|HTTPS| E2
         E2 --> B2
-        B2 -->|📡 API Calls| C2
-        C2 -->|💾 Database| D2
+        B2 -->|API Calls| C2
+        C2 -->|Database| D2
         E2 --> F2
     end
     
-    subgraph "🔄 CI/CD Pipeline"
-        G1[📦 GitHub Repository]
-        G2[🧪 Automated Tests]
-        G3[🏗️ Build Process]
-        G4[🚀 Deployment]
+    subgraph "CI/CD Pipeline"
+        G1[GitHub Repository]
+        G2[Automated Tests]
+        G3[Build Process]
+        G4[Deployment]
         
         G1 --> G2
         G2 --> G3
@@ -290,30 +290,30 @@ graph TB
 
 ```mermaid
 mindmap
-  root((🌟 Portfolio Website))
-    ⚛️ Frontend
-      🔥 Next.js 16
-      🧩 React 19
-      📘 TypeScript
-      🎨 Tailwind CSS
-      🎬 Framer Motion
-      🎯 React Icons
-    🚀 Backend
-      ⚡ FastAPI
-      🐍 Python 3.9+
-      🌟 Uvicorn
-      📋 Pydantic
-      🔗 AsyncPG
-    🗄️ Database
-      🐘 PostgreSQL
-      🔄 Connection Pooling
-      📚 Indexing
-    🛠️ DevOps
-      📦 Git
-      🔥 Vercel
-      🚂 Railway
-      🔄 GitHub Actions
-      🔐 Environment Variables
+  root((Portfolio Website))
+    Frontend
+      Next.js 16
+      React 19
+      TypeScript
+      Tailwind CSS
+      Framer Motion
+      React Icons
+    Backend
+      FastAPI
+      Python 3.9+
+      Uvicorn
+      Pydantic
+      AsyncPG
+    Database
+      PostgreSQL
+      Connection Pooling
+      Indexing
+    DevOps
+      Git
+      Vercel
+      Railway
+      GitHub Actions
+      Environment Variables
 ```
 
 ## Getting Started
@@ -392,7 +392,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-- Email: [Email](mailto:aimemartin018@gmail.com)
-LinkedIn: [LinkedIn](https://linkedin.com/in/nshuti-martin15)| GitHub: [GitHub](https://github.com/merma1509)
+Email: [Email](mailto:aimemartin018@gmail.com)| LinkedIn: [LinkedIn](https://linkedin.com/in/nshuti-martin15)| GitHub: [GitHub](https://github.com/merma1509)
 
 Built for innovation and impact with ❤️ by ~M. Let's connect!
